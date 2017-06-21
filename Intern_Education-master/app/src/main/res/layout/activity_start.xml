@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    tools:context="net.heronattion.solowin.activity.StartActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+
+            android:gravity="center_horizontal"
+
+            app:srcCompat="@mipmap/ic_launcher"
+            tools:layout_editor_absoluteX="64dp"
+            tools:layout_editor_absoluteY="165dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="60dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        >
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+
+            android:textSize="20dp"
+            android:text="가입된 아이디가 있으세요?"
+            android:textColor="#000000" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/loginbutton"
+            android:layout_marginTop="20dp"
+
+            android:textSize="25dp"
+            android:textColor="#7623D7"
+            android:text="로그인"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/button"
+            android:layout_marginTop="10dp"
+
+            android:textSize="25dp"
+            android:text="회원가입"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">SoloWin</string>
+
+    <!-- 공용 -->
+
+    <string name="connection_error">인터넷 연결 에러</string>
+    <string name="connection_error_request">인터넷 연결을 확인해주세요.</string>
+    <string name="ok">확인</string>
+    <string name="save">저장</string>
+    <string name="cancel">취소</string>
+
+    <!-- Login Activity -->
+    <string name="login_welcome_message">Welcom To SoloWin</string>
+    <string name="login_id">ID</string>
+    <string name="login_id_hint">아이디를 입력하세요</string>
+    <string name="login_pw">Password</string>
+    <string name="login_pw_hint">비밀번호를 입력하세요</string>
+    <string name="login_login_btn_text">로그인</string>
+    <string name="login_signup_btn_text">회원가입</string>
+    <string name="login_facebook_login_btn">페이스북으로 로그인</string>
+
+    <!-- ~~분전 표현 -->
+
+    <string name="just_now">방금 전</string>
+    <string name="a_minute_ago">1분 전</string>
+    <string name="minutes_ago_format">%d분 전</string>
+    <string name="a_hour_ago">한 시간 전</string>
+    <string name="hours_ago_format">%d시간 전</string>
+    <string name="a_day_ago">어제</string>
+    <string name="a_day_ago_and_time_format">어제 %s</string>
+
+    <string name="due_date_minutes">마감 임박</string>
+    <string name="due_date_a_hour_ago">마감 한 시간 전</string>
+    <string name="due_date_hours_ago_format">마감 %d시간 전</string>
+    <string name="due_date_a_day_ago">D-Day</string>
+    <string name="due_date_days_ago_format">D-%d</string>
+    <string name="due_date_over">종료</string>
+
+    <string name="title_activity_contact">ContactActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+</resources>

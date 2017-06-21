@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <ImageView
+            android:id="@+id/backImgeView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/story_sample_back"
+            android:scaleType="fitXY"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#5000"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/dateTxt"
+                android:textColor="#FFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2016년 11월 24일 (목)"/>
+
+            <TextView
+                android:id="@+id/titleTxt"
+                android:textColor="#FFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:text="모태솔로가 나타났다"/>
+
+            <TextView
+                android:id="@+id/locationTxt"
+                android:textColor="#FFF"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="마녀사냥"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+
+</LinearLayout>

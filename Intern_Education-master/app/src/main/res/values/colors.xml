@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#000</color>
+    <color name="colorPrimaryDark">#000</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorBackground">#7623d7</color>
+    <color name="colorDot">#999999</color>
+
+
+
+    <color name="titlebar_background">#FFF</color>
+    <color name="titlebar_title_txt_color">#000</color>
+    <color name="main_floating_user_name">#34D8CF</color>
+
+    <color name="black_overlay">#66000000</color>
+</resources>
