@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.heronattion.solowin.R;
+import net.heronattion.solowin.camera.Data.DotData;
+
+import java.util.ArrayList;
 
 /**
  * Created by hero on 2017-06-08.
@@ -28,8 +31,13 @@ public class SignupInformation3Activity extends BaseActivity {
 
     static public BaseActivity signupInfoActivity3;
 
+    //최초 측정 이후, 다시 점을 찍기 위해 저장하는 전역 리스트
+    //여기서는 선언만 한다.
+    public static ArrayList<DotData> savedCardDotList ;
 
-
+    //수동측정인지, 자동측정인지, 클릭을 안했는지 확인하는 플래그 변수
+    // 0이면 클릭 X, 1이면 수동측정, 2이면 자동측정
+    public static int autoCheckFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +59,8 @@ public class SignupInformation3Activity extends BaseActivity {
     @Override
     public void setValues() {
         super.setValues();
+        savedCardDotList = new ArrayList<DotData>();
+        autoCheckFlag = 0; // 클릭안한 상태
 
     }
     @Override
@@ -70,13 +80,16 @@ public class SignupInformation3Activity extends BaseActivity {
                 builder.setPositiveButton("카메라 측정", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        autoCheckFlag = 2;
                         Intent intent = new Intent(mContext, CameraCautionActivity.class);
                         startActivity(intent);
+
                     }
                 });
                 builder.setNegativeButton("수동 측정", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        autoCheckFlag = 1;
                         dialog.dismiss();
                     }
                 });
@@ -102,4 +115,6 @@ public class SignupInformation3Activity extends BaseActivity {
         this.sizeEdit = (EditText) findViewById(R.id.sizeEdit);
         this.addSize = (TextView) findViewById(R.id.addSize);
     }
+
+
 }

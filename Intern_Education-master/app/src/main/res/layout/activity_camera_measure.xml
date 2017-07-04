@@ -301,6 +301,7 @@
                         tools:text="어깨" />
 
                     <EditText
+                        android:id="@+id/detailSizeET"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"

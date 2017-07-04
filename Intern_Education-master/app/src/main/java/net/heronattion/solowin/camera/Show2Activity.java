@@ -1,5 +1,6 @@
 package net.heronattion.solowin.camera;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -24,6 +25,7 @@ import com.github.chrisbanes.photoview.PhotoView;
 
 import net.heronattion.solowin.R;
 import net.heronattion.solowin.activity.BaseActivity;
+import net.heronattion.solowin.activity.CameraMeasureActivity;
 import net.heronattion.solowin.activity.SignupInformation3Activity;
 import net.heronattion.solowin.camera.Controll.CreateLogo;
 
@@ -35,6 +37,8 @@ import java.util.ArrayList;
 
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Vector2D_F32;
+
+import static net.heronattion.solowin.activity.SignupInformation3Activity.savedCardDotList;
 
 public class Show2Activity extends BaseActivity {
 
@@ -57,11 +61,15 @@ public class Show2Activity extends BaseActivity {
     ImageView imageView; // 가이드라인 위한 이미지뷰
     ArrayList<DotData> cardDotList; // 카드에 대해 찍힌 점 저장하는 리스트
     ArrayList<DotData> outDotList; // 카드 외에 비교 대상 찍힌 점 저장하는 리스트
+
     float scaleValue; // 점의 확대를 위한 상수
     Bitmap cardDotbit; // 카드에 대해 찍힌 점 이미지
     Bitmap outDotbit; // 비교대상 점 이미지
     boolean windowfoucsflag = false;
 //    private Button logoBtn;
+
+
+    String caseFlag;
 
     @Override
     public void setCustomActionBar() {
@@ -103,6 +111,15 @@ public class Show2Activity extends BaseActivity {
     @Override
     public void setValues() {
         super.setValues();
+        // show2Activity로 넘어오는 경우 총 3가지
+        // 1. 회원가입 최초 측정
+        // 2. 회원가입 추가 입력
+        // 3. 마이페이지 추가 입력
+        // getExtra로 구별하자.
+        Intent intent = getIntent();
+        caseFlag = intent.getStringExtra("caseFlag");
+
+
 //        사진 찍자마자 저장된 사진을 불러와서 작업할 경우, 파일의 저장된 경로를 인텐트로 가져왔다.
 //        지금은 사진의 바이트 어레이를 가져와서 비트맵 전환후 작업 실행
 //        Intent intent = getIntent();
@@ -346,16 +363,64 @@ public class Show2Activity extends BaseActivity {
 
                 DecimalFormat form = new DecimalFormat("#.##");
 
-                if (CameraInit.flag.equals("2")) {
+                savedCardDotList.clear();
+
+                if (CameraInit.flag.equals("2")) { // 옷종류 구별 (허리)
 
 //                    CameraInit.sCameraWaistSize = Float.parseFloat(form.format(realLine));
-                    SignupInformation3Activity.sizeEdit.setText(Float.parseFloat(form.format(realLine)) + "");
+
+
+                    if (caseFlag.contains("1")) { // 최초측정
+                        // 전역 DotList에 마지막 카드점의 두 위치 저장
+                        savedCardDotList.add(cardDotList.get(0));
+                        savedCardDotList.add(cardDotList.get(1));
+                        savedCardDotList.add(cardDotList.get(2));
+                        savedCardDotList.add(cardDotList.get(3));
+                        SignupInformation3Activity.sizeEdit.setText(Float.parseFloat(form.format(realLine)) + "");
+
+                    } else if (caseFlag.contains("2")) { // 추가 입력
+                        // 전역 DotList에 마지막 카드점의 두 위치 저장
+                        // 추가 과정 도중 수정될 가능성도 고려
+                        savedCardDotList.add(cardDotList.get(0));
+                        savedCardDotList.add(cardDotList.get(1));
+                        savedCardDotList.add(cardDotList.get(2));
+                        savedCardDotList.add(cardDotList.get(3));
+                        CameraMeasureActivity.detailSizeET.setText(Float.parseFloat(form.format(realLine)) + "");
+
+                    } else { // 마이페이지 입력
+
+                    }
                     finish();
 
                 } else {
+                    //옷종류 구별(어깨)
 
 //                    CameraInit.sCameraShoulderSize = Float.parseFloat(form.format(realLine));
-                    SignupInformation3Activity.sizeEdit.setText(Float.parseFloat(form.format(realLine)) + "");
+//                    SignupInformation3Activity.sizeEdit.setText(Float.parseFloat(form.format(realLine)) + "");
+
+                    if (caseFlag.contains("1")) { // 최초측정
+                        // 전역 DotList에 마지막 카드점의 두 위치 저장
+                        savedCardDotList.add(cardDotList.get(0));
+                        savedCardDotList.add(cardDotList.get(1));
+                        savedCardDotList.add(cardDotList.get(2));
+                        savedCardDotList.add(cardDotList.get(3));
+
+                        SignupInformation3Activity.sizeEdit.setText(Float.parseFloat(form.format(realLine)) + "");
+
+                    } else if (caseFlag.contains("2")) { // 추가 입력
+                        // 전역 DotList에 마지막 카드점의 두 위치 저장
+                        // 추가 과정 도중 수정될 가능성도 고려
+                        savedCardDotList.add(cardDotList.get(0));
+                        savedCardDotList.add(cardDotList.get(1));
+                        savedCardDotList.add(cardDotList.get(2));
+                        savedCardDotList.add(cardDotList.get(3));
+
+
+                        CameraMeasureActivity.detailSizeET.setText(Float.parseFloat(form.format(realLine)) + "");
+
+                    } else { // 마이페이지 입력
+
+                    }
                     finish();
                 }
 
@@ -380,32 +445,89 @@ public class Show2Activity extends BaseActivity {
 
     // 이미지 프로세싱 결과로 DotView를 생성하는 과정
     public void createDotView() {
-        for (int i = 0; i < 4; i++) {
-            final ImageView dotView = new ImageView(mContext);
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            dotView.setLayoutParams(layoutParams);
-            cardDotbit = BitmapFactory.decodeResource(getResources(), R.drawable.dotimage3);
-            dotView.setAlpha(95);
-            dotView.setImageBitmap(cardDotbit);
+        if (caseFlag.contains("1")) {
+            // 최초로 사이즈 측정
+            for (int i = 0; i < 4; i++) {
+                final ImageView dotView = new ImageView(mContext);
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dotView.setLayoutParams(layoutParams);
+                cardDotbit = BitmapFactory.decodeResource(getResources(), R.drawable.dotimage3);
+                dotView.setAlpha(95);
+                dotView.setImageBitmap(cardDotbit);
 
-            dotView.setX((mRectF.right - mRectF.left) * ipPercent[i][0] + mRectF.left - cardDotbit.getWidth() / 2);
-            dotView.setY((mRectF.bottom - mRectF.top) * ipPercent[i][1] + mRectF.top - cardDotbit.getHeight() / 2);
-            dotView.setScaleX((photoImg2.getScale() + (CameraActivity.r - 1)) / CameraActivity.r);
-            dotView.setScaleY((photoImg2.getScale() + (CameraActivity.r - 1)) / CameraActivity.r);
-            if (i == 2 || i == 3) {
-                dotView.setVisibility(View.GONE);
+                dotView.setX((mRectF.right - mRectF.left) * ipPercent[i][0] + mRectF.left - cardDotbit.getWidth() / 2);
+                dotView.setY((mRectF.bottom - mRectF.top) * ipPercent[i][1] + mRectF.top - cardDotbit.getHeight() / 2);
+                dotView.setScaleX((photoImg2.getScale() + (CameraActivity.r - 1)) / CameraActivity.r);
+                dotView.setScaleY((photoImg2.getScale() + (CameraActivity.r - 1)) / CameraActivity.r);
+                if (i == 2 || i == 3) {
+                    dotView.setVisibility(View.GONE);
+                }
+                final DotData dot = new DotData();
+                dot.imageView = dotView;
+                dot.x = ipPercent[i][0];
+                dot.y = ipPercent[i][1];
+                dot.scale = dotView.getScaleX();
+
+                cardDotList.add(dot);
+                dragDot(dot);
+                showFrameLayout2.addView(dot.imageView);
+                Log.i("cardDotList 원소 갯수 : ", cardDotList.size() + "");
             }
-            final DotData dot = new DotData();
-            dot.imageView = dotView;
-            dot.x = ipPercent[i][0];
-            dot.y = ipPercent[i][1];
-            dot.scale = dotView.getScaleX();
+        } else if (caseFlag.contains("2")) {
+            //추가입력으로 들어온 경우
+            Log.d(">>>>>>>>>", showFrameLayout2.getChildCount() + "");
+            Log.d("<<<<<<<<<<", savedCardDotList.size() + "");
+//            showFrameLayout2.removeViews(1,showFrameLayout2.getChildCount());
+            cardDotList.clear();
+            for (int i = 0; i < 4; i++) {
+                cardDotList.add(savedCardDotList.get(i));
+                for (DotData d : cardDotList) {
+                    d.imageView.setX((mRectF.right - mRectF.left) * d.x + mRectF.left - d.imageView.getWidth() / 2);
+                    d.imageView.setScaleX((photoImg2.getScale() + (CameraActivity.r - 1)) / CameraActivity.r); // 비례식으로 나온 결과 -> 이미지는 최고 4배 확대 되고, 점들은 2배만 확대하게 함
 
-            cardDotList.add(dot);
-            dragDot(dot);
-            showFrameLayout2.addView(dot.imageView);
-            Log.i("cardDotList 원소 갯수 : ", cardDotList.size() + "");
+                    d.imageView.setY((mRectF.bottom - mRectF.top) * d.y + mRectF.top - d.imageView.getHeight() / 2);
+                    d.imageView.setScaleY((photoImg2.getScale() + (CameraActivity.r - 1)) / CameraActivity.r); // 비례식으로 나온 결과 -> 이미지는 최고 4배 확대 되고, 점들은 2배만 확대하게 함
+
+                    // 현재 scale과 전단계 scale을 비교하는 용도로 있었으나 안쓰는거 같다. -> 나중에 확인하고 지우자
+                    d.scale = scaleValue;
+                    Log.i("점 좌표.....", (d.imageView.getX() + d.imageView.getWidth() / 2) + " / " + (d.imageView.getY() + d.imageView.getHeight() / 2));
+                }
+                ImageView iv = cardDotList.get(i).imageView;
+                dragDot(cardDotList.get(i));
+                if (iv.getParent() != null)
+                    ((ViewGroup) iv.getParent()).removeView(iv);
+                Log.i("//////////", i + " / " + iv.getParent());
+                showFrameLayout2.addView(iv);
+            }
+
+//            for (int i = 0; i < 4; i++) {
+//                final ImageView dotView = new ImageView(mContext);
+//                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                dotView.setLayoutParams(layoutParams);
+//                cardDotbit = BitmapFactory.decodeResource(getResources(), R.drawable.dotimage3);
+//                dotView.setAlpha(95);
+//                dotView.setImageBitmap(cardDotbit);
+//
+//                dotView.setX((mRectF.right - mRectF.left) * savedCardDotList.get(i).imageView.getX()+ mRectF.left - cardDotbit.getWidth() / 2);
+//                dotView.setY((mRectF.bottom - mRectF.top) * savedCardDotList.get(i).imageView.getY()+ mRectF.top - cardDotbit.getHeight() / 2);
+//                dotView.setScaleX((photoImg2.getScale() + (CameraActivity.r - 1)) / CameraActivity.r);
+//                dotView.setScaleY((photoImg2.getScale() + (CameraActivity.r - 1)) / CameraActivity.r);
+//                if (i == 2 || i == 3) {
+//                    dotView.setVisibility(View.GONE);
+//                }
+//                final DotData dot = new DotData();
+//                dot.imageView = dotView;
+//                dot.x = ipPercent[i][0];
+//                dot.y = ipPercent[i][1];
+//                dot.scale = dotView.getScaleX();
+//
+//                cardDotList.add(dot);
+//                dragDot(dot);
+//                showFrameLayout2.addView(dot.imageView);
+//                Log.i("cardDotList 원소 갯수 : ", cardDotList.size() + "");
         }
+
+
     }
 
 

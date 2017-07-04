@@ -317,6 +317,7 @@ public class CameraActivity extends BaseActivity {
             photoByteData.setPhotoInfo(currentData);
 
             Intent intent = new Intent(CameraActivity.this, Show2Activity.class);
+            intent.putExtra("caseFlag","1");
             startActivity(intent);
             loading.dismiss();
             finish();
