@@ -21,8 +21,10 @@ import com.github.chrisbanes.photoview.OnMatrixChangedListener;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.OnScaleChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
+
 import net.heronattion.solowin.R;
 import net.heronattion.solowin.activity.BaseActivity;
+import net.heronattion.solowin.activity.SignupInformation3Activity;
 import net.heronattion.solowin.camera.Controll.CreateLogo;
 
 import net.heronattion.solowin.camera.Data.DotData;
@@ -62,14 +64,21 @@ public class Show2Activity extends BaseActivity {
 //    private Button logoBtn;
 
     @Override
+    public void setCustomActionBar() {
+        super.setCustomActionBar();
+        titleTxt.setText("측정결과");
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show2);
 
-
+        setCustomActionBar();
         bindViews();
         setValues();
         setupEvents();
+
         windowfoucsflag = true;
     }
 
@@ -278,7 +287,7 @@ public class Show2Activity extends BaseActivity {
                 Vector2D_F32 outVec = new Vector2D_F32();
                 float outX0 = outDotList.get(0).imageView.getX();
                 float outY0 = outDotList.get(0).imageView.getY();
-                Log.i("outDotList sizeData ", outDotList.size() + "");
+                Log.i("outDotList ", outDotList.size() + "");
                 float outX1 = outDotList.get(1).imageView.getX();
                 float outY1 = outDotList.get(1).imageView.getY();
 
@@ -309,7 +318,7 @@ public class Show2Activity extends BaseActivity {
                 Vector2D_F32 vec = new Vector2D_F32(points[1].x - points[0].x, points[1].y - points[0].y);
 
                 float compareLine =
-                Math.round(((float) Math.sqrt(vec.dot(vec)) / photoImg2.getScale()) * 100f) / 100f;
+                        Math.round(((float) Math.sqrt(vec.dot(vec)) / photoImg2.getScale()) * 100f) / 100f;
 //
 //                SortLineAndPaint sortLineAndPaint = new SortLineAndPaint();
 //                sortLineAndPaint.calAngle(points);
@@ -339,12 +348,14 @@ public class Show2Activity extends BaseActivity {
 
                 if (CameraInit.flag.equals("2")) {
 
-                    CameraInit.sCameraWaistSize = Float.parseFloat(form.format(realLine));
+//                    CameraInit.sCameraWaistSize = Float.parseFloat(form.format(realLine));
+                    SignupInformation3Activity.sizeEdit.setText(Float.parseFloat(form.format(realLine)) + "");
                     finish();
 
                 } else {
 
-                    CameraInit.sCameraShoulderSize = Float.parseFloat(form.format(realLine));
+//                    CameraInit.sCameraShoulderSize = Float.parseFloat(form.format(realLine));
+                    SignupInformation3Activity.sizeEdit.setText(Float.parseFloat(form.format(realLine)) + "");
                     finish();
                 }
 
@@ -355,7 +366,6 @@ public class Show2Activity extends BaseActivity {
                 createLogo.setBaseBitmap(resultBitmap);
                 createLogo.setCardDotList(cardDotList);
                 createLogo.logoProcess();
-
 
 
             }
@@ -382,7 +392,7 @@ public class Show2Activity extends BaseActivity {
             dotView.setY((mRectF.bottom - mRectF.top) * ipPercent[i][1] + mRectF.top - cardDotbit.getHeight() / 2);
             dotView.setScaleX((photoImg2.getScale() + (CameraActivity.r - 1)) / CameraActivity.r);
             dotView.setScaleY((photoImg2.getScale() + (CameraActivity.r - 1)) / CameraActivity.r);
-            if(i==2 || i==3){
+            if (i == 2 || i == 3) {
                 dotView.setVisibility(View.GONE);
             }
             final DotData dot = new DotData();
@@ -397,8 +407,6 @@ public class Show2Activity extends BaseActivity {
             Log.i("cardDotList 원소 갯수 : ", cardDotList.size() + "");
         }
     }
-
-
 
 
     // 찍은점 드래그 해주는 함수

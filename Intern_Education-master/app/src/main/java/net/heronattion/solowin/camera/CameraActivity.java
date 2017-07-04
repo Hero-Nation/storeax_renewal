@@ -103,16 +103,16 @@ public class CameraActivity extends BaseActivity {
         // 추후 이를 사용해 최적화된 해상도를 찾아야한다.(지금은 폰 디스플레이 해상도를 대입하는방식)
 //        Camera.Parameters parameters = mCamera.getParameters();
 //        if (parameters != null) {
-//            List<Camera.SizeData> pictureSizeList = parameters.getSupportedPictureSizes();
-//            for (Camera.SizeData sizeData : pictureSizeList) {
-//                Log.d("##PictureSize##", "width: " + sizeData.width + "(" + width + ")" +
-//                        "height :" + sizeData.height + "(" + height + ")");
+//            List<Camera.ImageViewSizeData> pictureSizeList = parameters.getSupportedPictureSizes();
+//            for (Camera.ImageViewSizeData imageViewSizeData : pictureSizeList) {
+//                Log.d("##PictureSize##", "width: " + imageViewSizeData.width + "(" + width + ")" +
+//                        "height :" + imageViewSizeData.height + "(" + height + ")");
 //            } //지원하는 사진의 크기
 //
-//            List<Camera.SizeData> previewSizeList = parameters.getSupportedPreviewSizes();
-//            for (Camera.SizeData sizeData : previewSizeList) {
-//                Log.d("##previewSize##", "width: " + sizeData.width + "(" + width + ")" +
-//                        "height :" + sizeData.height + "(" + height + ")");
+//            List<Camera.ImageViewSizeData> previewSizeList = parameters.getSupportedPreviewSizes();
+//            for (Camera.ImageViewSizeData imageViewSizeData : previewSizeList) {
+//                Log.d("##previewSize##", "width: " + imageViewSizeData.width + "(" + width + ")" +
+//                        "height :" + imageViewSizeData.height + "(" + height + ")");
 //            } //지원하는 프리뷰 크기
 //        }
     }

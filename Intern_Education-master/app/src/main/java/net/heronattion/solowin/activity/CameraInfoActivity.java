@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import net.heronattion.solowin.R;
-import net.heronattion.solowin.camera.CameraActivity;
+import net.heronattion.solowin.camera.CameraInit;
 
 public class CameraInfoActivity extends BaseActivity {
 
@@ -37,7 +37,8 @@ public class CameraInfoActivity extends BaseActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, CameraActivity.class);
+                Intent intent = new Intent(mContext, CameraInit.class);
+                intent.putExtra("mypage_flag","1");
                 startActivity(intent);
                 finish();
             }

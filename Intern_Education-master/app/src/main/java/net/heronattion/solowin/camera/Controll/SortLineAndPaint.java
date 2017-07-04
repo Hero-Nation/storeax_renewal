@@ -78,7 +78,7 @@ public class SortLineAndPaint {
             Point2D_F32 IP4 = new Point2D_F32();
             Point2D_F32[] IP = new Point2D_F32[4];
 
-            // lines에서 0과 sizeData()-1은 각각 최외각의 선을 의미
+            // lines에서 0과 imageViewSizeData()-1은 각각 최외각의 선을 의미
             if (linesX.size() == 0 || linesY.size() == 0) {
                 Toast.makeText(mContext, "인식에 실패하였습니다. 다시 촬영해 주십시오.", Toast.LENGTH_SHORT).show();
             } else {

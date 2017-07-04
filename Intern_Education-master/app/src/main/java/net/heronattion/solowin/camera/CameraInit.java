@@ -11,14 +11,14 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import net.heronattion.solowin.R;
+import net.heronattion.solowin.activity.BaseActivity;
 
-public class CameraInit extends AppCompatActivity {
+public class CameraInit extends BaseActivity {
 
     public static String flag = "0";
     public static float sCameraShoulderSize = 0;
@@ -31,9 +31,16 @@ public class CameraInit extends AppCompatActivity {
     ImageView iv;
 
     @Override
+    public void setCustomActionBar() {
+        super.setCustomActionBar();
+        titleTxt.setText("메뉴얼");
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_init);
+        setCustomActionBar();
 
         Intent intent = getIntent();
         flag = intent.getStringExtra("mypage_flag");

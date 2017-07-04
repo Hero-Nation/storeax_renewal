@@ -2,7 +2,6 @@ package net.heronattion.solowin.camera;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,12 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.heronattion.solowin.R;
+import net.heronattion.solowin.activity.BaseActivity;
 
 /**
  * Created by HERO NATION2 on 2017-03-09.
  */
 
-public class CameraDesc3 extends AppCompatActivity {
+public class CameraDesc3 extends BaseActivity {
 
     Button btn;
     ImageView iv;
@@ -23,9 +23,17 @@ public class CameraDesc3 extends AppCompatActivity {
     private LinearLayout activitymain;
 
     @Override
+    public void setCustomActionBar() {
+        super.setCustomActionBar();
+        titleTxt.setText("메뉴얼");
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_desc3);
+        setCustomActionBar();
+
         this.activitymain = (LinearLayout) findViewById(R.id.activity_main);
         this.desc3 = (TextView) findViewById(R.id.desc3);
 

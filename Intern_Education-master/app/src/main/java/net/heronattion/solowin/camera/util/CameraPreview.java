@@ -206,7 +206,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         int width = display.getWidth();
         int height = display.getHeight();
         parameters.setPreviewSize(width,height);
-//        parameters.setPreviewSize(sizeData.width, sizeData.height);
+//        parameters.setPreviewSize(imageViewSizeData.width, imageViewSizeData.height);
 //        parameters.setPreviewSize(1088, 1088);
         Log.i("best widt / height",size.width +" / "+ size.height);
 

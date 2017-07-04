@@ -5,7 +5,7 @@ import android.util.Log;
 
 
 import net.heronattion.solowin.camera.CameraActivity;
-import net.heronattion.solowin.camera.Data.SizeData;
+import net.heronattion.solowin.camera.Data.ImageViewSizeData;
 import net.heronattion.solowin.camera.util.BitmapUtil;
 
 import boofcv.alg.filter.misc.AverageDownSampleOps;
@@ -22,7 +22,7 @@ public class ConvertGray {
 //    public PhotoView mImageResult; // 결과 출력용 ImageView -> 다음 단계로 넘겨준다.
 
     // 다른 클래스에서도 사이즈 및 크키조절한 비트맵 접근 가능 하기 위해 static 선언
-    public static SizeData sizeData; // SobelGradAndDetectLine에서  사용
+    public static ImageViewSizeData imageViewSizeData; // SobelGradAndDetectLine에서  사용
     public static Bitmap resizeImage; // SortLineAndPaint에서 사용
 
     // 이미지를 crop 및 사이즈 조절
@@ -49,11 +49,11 @@ public class ConvertGray {
 
         // 사이즈 정보 저장, 다른 연산 클래스에서 접근 가능
         // 원본 이미지 비트맵을 r배만큼 줄인것(1/r)
-        sizeData = new SizeData();
-        sizeData.width = width; sizeData.height = height;
+        imageViewSizeData = new ImageViewSizeData();
+        imageViewSizeData.width = width; imageViewSizeData.height = height;
 
-        Log.i("width : ", sizeData.width+"");
-        Log.i("height : ", sizeData.height+"");
+        Log.i("width : ", imageViewSizeData.width+"");
+        Log.i("height : ", imageViewSizeData.height+"");
 
         //BoofCV 연산은 기본적으로 Gray클래스들로 진행(메모리 사용 최적화)
         //사용할 Gray변수들 선언

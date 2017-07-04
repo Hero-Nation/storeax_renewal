@@ -32,8 +32,8 @@ import georegression.struct.line.LineSegment2D_F32;
 
 public class SobelGradAndDetectLine {
     // 이미지 사이즈 -> 사이즈 클래스에서 불러온다.
-    int width = ConvertGray.sizeData.width;
-    int height = ConvertGray.sizeData.height;
+    int width = ConvertGray.imageViewSizeData.width;
+    int height = ConvertGray.imageViewSizeData.height;
 
     //소벨 그라디언트 멤버 변수
     public GrayU8 scaleimg;

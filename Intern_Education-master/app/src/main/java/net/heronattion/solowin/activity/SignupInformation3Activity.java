@@ -20,13 +20,16 @@ import net.heronattion.solowin.R;
 public class SignupInformation3Activity extends BaseActivity {
 
     public TextView addSize;
-    private android.widget.EditText sizeEdit;
+    public static android.widget.EditText sizeEdit;
     private TextView nextButton3;
 
     private String CategoryPKey;
     private String CategoryName;
 
     static public BaseActivity signupInfoActivity3;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +44,15 @@ public class SignupInformation3Activity extends BaseActivity {
         CategoryName = getIntent().getExtras().getString("Name");
 
         bindViews();
+        setValues();
         setupEvents();
 
     }
+    @Override
+    public void setValues() {
+        super.setValues();
 
+    }
     @Override
     public void setupEvents() {
         sizeEdit.setOnClickListener(new View.OnClickListener() { // ImageButton을 Click시 AlertDialog가 생성되도록 아래과 같이 설계

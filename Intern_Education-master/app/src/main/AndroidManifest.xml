@@ -45,7 +45,15 @@
         <activity android:name=".activity.UpdatePassword" />
         <activity android:name=".activity.ContactActivity" />
         <activity android:name=".activity.MyPageActivity" />
-        <activity android:name=".camera.CameraActivity" />
+        <activity android:name=".camera.CameraActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".camera.CameraStartActivity" />
+        <activity android:name=".camera.CameraDesc3" />
+        <activity android:name=".camera.CameraDesc4" />
+        <activity android:name=".camera.CameraInit" />
+        <activity android:name=".camera.Show2Activity" />
+
+
         <activity android:name=".activity.CameraCautionActivity" />
         <activity android:name=".activity.CameraInfoActivity" />
         <activity
