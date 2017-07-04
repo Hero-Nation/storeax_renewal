@@ -47,7 +47,8 @@ public class SignupInformation2Activity extends BaseActivity {
     //파싱된 데이터를 활용하여 버튼 동적할당
     private CheckBox[] chCategoryArray, chStyleArray, chBrandArray, chColorArray;
 
-    private String strCategoryPkey;
+    static public String strCategoryPkey;
+    static public String name;
 
     private int categoryCount = 0;
     private int categoryFlag = 0;
@@ -87,9 +88,9 @@ public class SignupInformation2Activity extends BaseActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(mContext, SignupInformation3Activity.class);
-
+                name = textView2.getText().toString();
                 intent.putExtra("PKey", strCategoryPkey);
-                intent.putExtra("Name", textView2.getText().toString());
+                intent.putExtra("Name", name);
 
                 Log.i("Category Pkey: ", strCategoryPkey);
                 Log.i("textView : ", textView2.getText().toString());

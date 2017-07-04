@@ -26,11 +26,13 @@ public class SignupInformation3Activity extends BaseActivity {
     private String CategoryPKey;
     private String CategoryName;
 
+    static public BaseActivity signupInfoActivity3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signupinformation3);
-
+        signupInfoActivity3 = this;
         setCustomActionBar();
         TextView title = (TextView) findViewById(R.id.title);
         title.setText("추가정보 입력");
@@ -60,7 +62,8 @@ public class SignupInformation3Activity extends BaseActivity {
                 builder.setPositiveButton("카메라 측정", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        Intent intent = new Intent(mContext, CameraCautionActivity.class);
+                        startActivity(intent);
                     }
                 });
                 builder.setNegativeButton("수동 측정", new DialogInterface.OnClickListener() {

@@ -1,6 +1,94 @@
 <resources>
-    <string name="app_name">SoloWin</string>
 
-    <!-- Login Activity -->
-    <string name="login_welcome_message">솔로윈에 오신것을 환영합니다.</string>
+    <string name="app_name">StoreAX</string>
+
+    <!--Common-->
+    <string name="yes_message">네</string>
+    <string name="no_message">아니오</string>
+    <string name="want_exit_message">종료하시겠습니까?</string>
+    <string name="exit_message">종료</string>
+    <string name="server_error_message">죄송합니다. 서버가 불안정하니 다시 시도해주세요.</string>
+    <string name="btn_confirm">확인</string>
+    <string name="btn_save">저장하기</string>
+    <string name="no_product_message">조건에 맞는 상품이 존재하지 않습니다.</string>
+
+    <!--Login Activity-->
+    <string name="login_wrong_idpw">아이디나 패스워드가 틀렸습니다. 다시 입력해주세요.</string>
+    <string name="login_welcome_message">로그인에 성공했습니다.</string>
+    <string name="logout_bye_message">로그아웃 되었습니다.</string>
+    <string name="login_welcome_guest">게스트로 입장합니다.</string>
+
+    <!--SignupActivity-->
+    <string name="signup_btn_name">가입하기</string>
+    <string name="signup_duplication_id_message">중복된 아이디입니다.</string>
+    <string name="signup_short_id_message">아이디 길이가 너무 짧습니다(8자 이상)</string>
+    <string name="signup_dont_input_id_message">아이디를 입력하세요.</string>
+    <string name="signup_diffrent_pw_message">비밀번호가 일치하지 않습니다.</string>
+    <string name="signup_short_pw_message">비밀번호가 너무 짧습니다.</string>
+    <string name="signup_wrong_email_message">이메일 형식이 올바르지 않습니다.</string>
+
+    <!--FilterActivity-->
+    <string name="shoulder_name">어깨</string>
+    <string name="waist_name">허리</string>
+    <string name="age_name">연령층</string>
+    <string name="category_name">카테고리</string>
+    <string name="brand_name">브랜드</string>
+    <string name="style_name">스타일</string>
+    <string name="color_name">색상</string>
+    <string name="price_name">가격</string>
+    <string name="filter_apply_message">필터가 적용되었습니다.</string>
+
+    <!--MypageActivity-->
+    <string name="mypage_info_name">기본정보</string>
+    <string name="mypage_id_name">아이디</string>
+    <string name="mypage_pw_name">비밀번호</string>
+    <string name="mypage_confirm_pw_name">비밀번호 확인</string>
+    <string name="year_name">년</string>
+    <string name="month_name">월</string>
+    <string name="day_name">일</string>
+    <string name="size_name">사이즈</string>
+    <string name="add_info_name">추가정보</string>
+    <string name="address_name">주소</string>
+    <string name="nation_name">국가</string>
+    <string name="tell_name">연락처</string>
+    <string name="logout_name">로그아웃</string>
+    <string name="save_message">저장되었습니다.</string>
+
+    <!--DetailActivity-->
+    <string name="name_name">이름</string>
+    <string name="description_name">설명</string>
+    <string name="hashtag_name">해시태그</string>
+    <string name="buy_name">구매하기</string>
+
+    <!--sLanguage-->
+    <string name="select_nation_message">국가를 설정하세요</string>
+
+    <!--SignupActivity-->
+    <string name="signup_exit_message">입력한 내용이 저장되지 않습니다. 계속하시겠습니까?</string>
+    <string name="signup_add_exit_message">추가정보를 입력하지 않았습니다. 계속하시겠습니까?</string>
+    <string name="signup_add_Birthday">생년월일</string>
+
+    <!--CameraActivity-->
+    <string name="camera_way_to_measurement_message">사이즈 측정법 선택</string>
+    <string name="camera_measure_auto_message">자동</string>
+    <string name="camera_measure_manual_message">수동</string>
+    <string name="camera_mesurement_message">측정</string>
+    <string name="camera_re_mesurement_message">재측정</string>
+    <string name="camera_touch_all_point_message">4개의 점을 터치해주세요.</string>
+    <string name="camera_adjust_center_message">카드를 중앙의 원에 위치시켜 촬영해주세요.</string>
+    <string name="camera_press_left_card">카드 왼쪽 끝을 터치해주세요.</string>
+    <string name="camera_press_right_card">카드 오른쪽 끝을 터치해주세요.</string>
+    <string name="camera_press_left_shoulder">어깨 왼쪽 끝을 터치해주세요.</string>
+    <string name="camera_press_right_shoulder">어깨 오른쪽 끝을 터치해주세요.</string>
+    <string name="camera_press_left_waist">허리 왼쪽 끝을 터치해주세요.</string>
+    <string name="camera_press_right_waist">허리 오른쪽 끝을 터치해주세요.</string>
+    <string name="camera_input_complete">입력이 완료되었습니다.</string>
+    <string name="camera_Input_exceeded">입력 횟수가 초과되었습니다.</string>
+    <string name="camera_sure_size_message">사이즈 확정</string>
+
+    <string name="camera_select_photo">사진 선택</string>
+    <string name="camera_revert">되돌리기</string>
+    <string name="camera_next">다음</string>
+    <string name="camera_take_picture">사진 촬영</string>
+
 </resources>

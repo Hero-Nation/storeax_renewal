@@ -19,7 +19,7 @@ import net.heronattion.solowin.R;
 
 public class BaseActivity extends AppCompatActivity {
 
-    public Context mContext = null;
+    public static Context mContext = null;
 
     public ImageView backBtn;
     public TextView titleTxt;
