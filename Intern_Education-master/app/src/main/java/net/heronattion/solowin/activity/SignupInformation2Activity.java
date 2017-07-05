@@ -81,6 +81,7 @@ public class SignupInformation2Activity extends BaseActivity {
     public void setupEvents() {
         parsingOptions();
         signupInformation2.setFocusableInTouchMode(true);
+        signupInformation2.setFocusableInTouchMode(true);
         signupInformation2.setFocusable(true);
 
         nextButton2.setOnClickListener(new Button.OnClickListener() {

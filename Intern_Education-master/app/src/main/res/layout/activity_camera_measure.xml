@@ -25,10 +25,42 @@
                 android:layout_height="match_parent"
                 android:background="#FFFFFF">
 
-                <com.github.chrisbanes.photoview.PhotoView
+                <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@mipmap/ic_launcher_round" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.35" />
+
+                    <TextView
+                        android:id="@+id/cautionTxt"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.2"
+                        android:alpha="0.6"
+                        android:background="#000000"
+                        android:gravity="center"
+                        android:text="xx 크기는 최소 xxcm에서 \n xxcm 이내로 기입하셔야합니다."
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp"
+                        android:visibility="invisible"
+                        />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.35" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -51,8 +83,8 @@
                                 android:id="@+id/sizeTypeTab1"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:gravity="center"
                                 android:layout_weight="0.25"
+                                android:gravity="center"
                                 android:orientation="horizontal">
 
                                 <View
@@ -86,8 +118,8 @@
                                 android:id="@+id/sizeTypeTab2"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:gravity="center"
                                 android:layout_weight="0.25"
+                                android:gravity="center"
                                 android:orientation="horizontal">
 
                                 <View
@@ -121,8 +153,8 @@
                                 android:id="@+id/sizeTypeTab3"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:gravity="center"
                                 android:layout_weight="0.25"
+                                android:gravity="center"
                                 android:orientation="horizontal">
 
                                 <View
@@ -156,8 +188,8 @@
                                 android:id="@+id/sizeTypeTab4"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:gravity="center"
                                 android:layout_weight="0.25"
+                                android:gravity="center"
                                 android:orientation="horizontal">
 
                                 <View
@@ -200,8 +232,8 @@
                                 android:id="@+id/sizeTypeTab5"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
                                 android:layout_weight="0.25"
+                                android:gravity="center"
                                 android:orientation="horizontal">
 
                                 <View
@@ -261,6 +293,7 @@
 
                         </LinearLayout>
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -306,7 +339,9 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
                         android:background="@null"
-                        android:singleLine="true" />
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:imeOptions="actionDone"/>
 
                     <TextView
                         android:layout_width="0dp"

@@ -5,26 +5,29 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import net.heronattion.solowin.R;
 import net.heronattion.solowin.camera.Show2Activity;
+import net.heronattion.solowin.data.SizeTypeIDAndFlagData;
 import net.heronattion.solowin.network.HttpClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -71,7 +74,11 @@ public class CameraMeasureActivity extends BaseActivity {
     private String selectedID;
 
     String[][] sizeTypeAndSize;
+    private TextView cautionTxt;
 
+    int[] minimum_restrict;
+    int[] maximum_restrict;
+    String[] sizeTypeNameArr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +125,12 @@ public class CameraMeasureActivity extends BaseActivity {
             detailSizeET.setText(sizeEdit.getText().toString());
         }
 
+
+        minimum_restrict = new int[]{10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
+        maximum_restrict = new int[]{150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150};
+        sizeTypeNameArr =
+                new String[]{"어깨", "가슴", "소매", "상의총기장", "원피스총기장", "소매통", "허리", "허벅지", "밑위", "밑단", "하의총기장", "힙", "발길이", "발볼", "굽"};
+
     }
 
     @Override
@@ -141,11 +154,19 @@ public class CameraMeasureActivity extends BaseActivity {
                         Log.d("sizeTypeID", sizeTypeID);
                         Log.d("sizeName", sizeName);
 
-                        sizeTypeNameArray[i].setText(sizeName);
-                        sizeTypeTabArray[i].setTag(sizeTypeID);
-                        if(i==0){
+                        SizeTypeIDAndFlagData tag = new SizeTypeIDAndFlagData();
+                        tag.setSizeTypeID(sizeTypeID);
+
+                        if (i == 0) {
+                            tag.setFlag(1);
                             selectedID = sizeTypeID;
+                        }else{
+                            tag.setFlag(2);
                         }
+
+                        sizeTypeNameArray[i].setText(sizeName);
+                        sizeTypeTabArray[i].setTag(tag);
+
                         sizeTypeAndSize[i][0] = sizeTypeID;
                         sizeTypeAndSize[i][1] = "";
                     }
@@ -165,16 +186,7 @@ public class CameraMeasureActivity extends BaseActivity {
                         @Override
                         public void onClick(View v) {
 
-                            // 배열에 저장된 사이즈 출력
-                            for (int j = 0; j < sizeTypeAndSize.length; j++) {
-                                if(sizeEdit.getText().toString().length()!=0) {
-                                    if (ll.getTag().toString().equals(sizeTypeAndSize[j][0])) {
-                                        detailSizeET.setText(sizeTypeAndSize[j][1]);
-                                        break;
-                                    }
-                                }
-                            }
-
+                            detailSizeET.setTag(ll.getTag()); // detailSizeET에도 ll의 태그(sizeTypeID)를 똑같이 먹여준다.
                             // 탭 클릭할때마다 이전의 사이즈 배열에 저장
                             for (int j = 0; j < sizeTypeAndSize.length; j++) {
                                 if (selectedID.equals(sizeTypeAndSize[j][0])) {
@@ -182,20 +194,44 @@ public class CameraMeasureActivity extends BaseActivity {
                                     break;
                                 }
                             }
-                            selectedID = ll.getTag().toString();
+                            SizeTypeIDAndFlagData tagdata = (SizeTypeIDAndFlagData) ll.getTag();
+                            selectedID = tagdata.getSizeTypeID()+"";
 
-                            for(int j = 0 ; j < sizeTypeAndSize.length ; j++){
+                            for (int k = 0; k < sizeTypeAndSize.length; k++) {
+                                if ((tagdata.getSizeTypeID()+"").equals(sizeTypeAndSize[k][0])) {
+                                    detailSizeET.setText(sizeTypeAndSize[k][1]);
+                                    break;
+                                }
+                            }
 
-                                System.out.println("ID : " + sizeTypeAndSize[j][0] + " Size : "+ sizeTypeAndSize[j][1]) ;
+
+                            for (int j = 0; j < sizeTypeAndSize.length; j++) {
+
+                                System.out.println("ID : " + sizeTypeAndSize[j][0] + " Size : " + sizeTypeAndSize[j][1]);
 
                             }
 
+
+
+                            // 색 전부 바꾸자
+                        if(tagdata.getFlag() == 0){
+
+                        }
                             for (int i = 0; i < sizeTypeTabArray.length; i++) {
                                 sizeTypeTabArray[i].setBackgroundColor(Color.WHITE);
                                 sizeTypeNameArray[i].setTextColor(Color.rgb(137, 137, 137));
 //                        sizeTypeCheckArray[i].setBackgroundDrawable(getResources().getDrawable(R.drawable.check_grey));
-                                sizeTypeCheckArray[i].setImageResource(0);
-                                sizeTypeCheckArray[i].setImageResource(R.drawable.check_grey);
+                                if(tagdata.getFlag()==2){ // 트루 상태
+                                    sizeTypeCheckArray[i].setImageResource(0);
+                                    sizeTypeCheckArray[i].setImageResource(R.drawable.check_green);
+                                }else if(tagdata.getFlag()==0){
+                                    sizeTypeCheckArray[i].setImageResource(0);
+                                    sizeTypeCheckArray[i].setImageResource(R.drawable.check_red);
+                                }else{
+                                    sizeTypeCheckArray[i].setImageResource(0);
+                                    sizeTypeCheckArray[i].setImageResource(R.drawable.check_grey);
+                                }
+
                             }
 
                             TextView tv = (TextView) (ll.getChildAt(1));
@@ -203,6 +239,8 @@ public class CameraMeasureActivity extends BaseActivity {
 
                             v.setBackgroundColor(Color.rgb(181, 173, 222));
                             tv.setTextColor(Color.WHITE);
+
+
                             iv.setImageResource(0);
                             iv.setImageResource(R.drawable.check_white);
 //                    iv.setBackgroundDrawable(getResources().getDrawable(R.drawable.check_white));
@@ -276,8 +314,142 @@ public class CameraMeasureActivity extends BaseActivity {
 
             }
         });
+
+        detailSizeET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // 입력하기 전에
+                limitConditionFunc();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // 입력되는 텍스트 변화있을때
+                limitConditionFunc();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // 입력이 끝났을떄
+            }
+        });
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean totalFlag = false;
+
+
+                int finalSelectedIDlocation = 0;
+
+                for (int i = 0; i < sizeTypeAndSize.length; i++) {
+                    SizeTypeIDAndFlagData tagdata = (SizeTypeIDAndFlagData) sizeTypeTabArray[i].getTag();
+                    if ((tagdata.getSizeTypeID()+"").equals(selectedID)) {
+                        finalSelectedIDlocation = i;
+                    }
+                }
+                sizeTypeAndSize[finalSelectedIDlocation][1] = detailSizeET.getText().toString();
+
+
+                //최종 플래그 검사
+                for(int i = 0 ; i <sizeTypeTabArray.length ; i++){
+                    SizeTypeIDAndFlagData tagdata = (SizeTypeIDAndFlagData)sizeTypeTabArray[i].getTag();
+                    Log.i("flag 검사 결과 "+ i, tagdata.getFlag()+"");
+                    if(tagdata.getFlag() == 0 || tagdata.getFlag() == 1 ){ // 유효성 ok
+                        totalFlag = true;
+                    }else{
+                        totalFlag = false;
+                        break;
+                    }
+                }
+
+                    RequestParams params = new RequestParams();
+                    params.put("UserPKey", "2087");
+                    params.put("CategoryID", strCategoryPkey);
+//                params.put("Name",name);
+                    params.put("Name", "AndroidTest");
+                    params.put("SizetypeAndSize", sizeTypeAndSize);
+                    Log.i("totalFlag",totalFlag+"");
+                if(totalFlag){
+
+                    HttpClient.post("/sizeax/CHS/php/insertusersize.php", params, new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            System.out.println("Result >>>>>> " + new String(responseBody));
+                            Toast.makeText(mContext,new String(responseBody),Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            System.out.println("Result >>>>>> ERROR");
+                        }
+                    });
+                }else{
+                    Toast.makeText(mContext, "Error", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+
+
     }
 
+
+    public void limitConditionFunc() {
+        SizeTypeIDAndFlagData tagdata_et = (SizeTypeIDAndFlagData)(detailSizeET.getTag());
+        int sizetypeid = tagdata_et.getSizeTypeID();
+        int size = 0;
+        if (!detailSizeET.getText().toString().equals("")) {
+            size = Integer.parseInt(detailSizeET.getText().toString());
+        }
+
+
+        String alertText = sizeTypeNameArr[sizetypeid - 1] + "크기는 최소 " + minimum_restrict[sizetypeid - 1] + "cm에서 " + maximum_restrict[sizetypeid - 1] + "cm로 기입하셔야합니다.";
+
+        if (sizetypeid == 1 || sizetypeid == 7) { // 필수입력값
+            if (detailSizeET.getText().length() == 0) { // 공백
+                tagdata_et.setFlag(0);
+                cautionTxt.setVisibility(View.VISIBLE);
+                cautionTxt.setText(sizeTypeNameArr[sizetypeid - 1] + "크기는 반드시 입력하셔야합니다.");
+            } else if (size < minimum_restrict[sizetypeid - 1]) {
+                tagdata_et.setFlag(0);
+                cautionTxt.setVisibility(View.VISIBLE);
+                cautionTxt.setText(alertText);
+            } else if (size > maximum_restrict[sizetypeid - 1]) {
+                tagdata_et.setFlag(0);
+                cautionTxt.setVisibility(View.VISIBLE);
+                cautionTxt.setText(alertText);
+            } else {
+                tagdata_et.setFlag(2);
+                cautionTxt.setVisibility(View.INVISIBLE);
+            }
+        } else {
+            if(detailSizeET.getText().length() == 0){
+                tagdata_et.setFlag(1);
+                cautionTxt.setVisibility(View.INVISIBLE);
+            } else if (size < minimum_restrict[sizetypeid - 1]) {
+                tagdata_et.setFlag(0);
+                cautionTxt.setVisibility(View.VISIBLE);
+                cautionTxt.setText(alertText);
+            } else if (size > maximum_restrict[sizetypeid - 1]) {
+                tagdata_et.setFlag(0);
+                cautionTxt.setVisibility(View.VISIBLE);
+                cautionTxt.setText(alertText);
+            } else {
+                tagdata_et.setFlag(2);
+                cautionTxt.setVisibility(View.INVISIBLE);
+            }
+        }
+        for (int i = 0; i < sizeTypeAndSize.length; i++) {
+            SizeTypeIDAndFlagData tagdata_tab = (SizeTypeIDAndFlagData) sizeTypeTabArray[i].getTag();
+            if (tagdata_tab.getSizeTypeID()==sizetypeid) {
+                sizeTypeTabArray[i].setTag(tagdata_tab);
+                break;
+            }
+        }
+
+    }
 
     @Override
     public void setCustomActionBar() {
@@ -307,6 +479,7 @@ public class CameraMeasureActivity extends BaseActivity {
         this.sizeTypeTab1 = (LinearLayout) findViewById(R.id.sizeTypeTab1);
         this.sizeTypeCheckImg1 = (ImageView) findViewById(R.id.sizeTypeCheckImg1);
         this.sizeTypeNameTxt1 = (TextView) findViewById(R.id.sizeTypeNameTxt1);
+        this.cautionTxt = (TextView) findViewById(R.id.cautionTxt);
 
     }
 
