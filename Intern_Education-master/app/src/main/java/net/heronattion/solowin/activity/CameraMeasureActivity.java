@@ -31,6 +31,7 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+import static net.heronattion.solowin.activity.SignupInformation2Activity.name;
 import static net.heronattion.solowin.activity.SignupInformation2Activity.strCategoryPkey;
 import static net.heronattion.solowin.activity.SignupInformation3Activity.autoCheckFlag;
 import static net.heronattion.solowin.activity.SignupInformation3Activity.sizeEdit;
@@ -158,10 +159,10 @@ public class CameraMeasureActivity extends BaseActivity {
                         tag.setSizeTypeID(sizeTypeID);
 
                         if (i == 0) {
-                            tag.setFlag(1);
+                            tag.setFlag(0);
                             selectedID = sizeTypeID;
-                        }else{
-                            tag.setFlag(2);
+                        } else {
+                            tag.setFlag(1);
                         }
 
                         sizeTypeNameArray[i].setText(sizeName);
@@ -195,10 +196,10 @@ public class CameraMeasureActivity extends BaseActivity {
                                 }
                             }
                             SizeTypeIDAndFlagData tagdata = (SizeTypeIDAndFlagData) ll.getTag();
-                            selectedID = tagdata.getSizeTypeID()+"";
+                            selectedID = tagdata.getSizeTypeID() + "";
 
                             for (int k = 0; k < sizeTypeAndSize.length; k++) {
-                                if ((tagdata.getSizeTypeID()+"").equals(sizeTypeAndSize[k][0])) {
+                                if ((tagdata.getSizeTypeID() + "").equals(sizeTypeAndSize[k][0])) {
                                     detailSizeET.setText(sizeTypeAndSize[k][1]);
                                     break;
                                 }
@@ -212,22 +213,20 @@ public class CameraMeasureActivity extends BaseActivity {
                             }
 
 
-
                             // 색 전부 바꾸자
-                        if(tagdata.getFlag() == 0){
 
-                        }
                             for (int i = 0; i < sizeTypeTabArray.length; i++) {
+                                SizeTypeIDAndFlagData tagdata2 = (SizeTypeIDAndFlagData) sizeTypeTabArray[i].getTag();
                                 sizeTypeTabArray[i].setBackgroundColor(Color.WHITE);
                                 sizeTypeNameArray[i].setTextColor(Color.rgb(137, 137, 137));
-//                        sizeTypeCheckArray[i].setBackgroundDrawable(getResources().getDrawable(R.drawable.check_grey));
-                                if(tagdata.getFlag()==2){ // 트루 상태
+                                sizeTypeCheckArray[i].setImageResource(R.drawable.check_grey);
+                                if (tagdata2.getFlag() == 2) { // 트루 상태
                                     sizeTypeCheckArray[i].setImageResource(0);
                                     sizeTypeCheckArray[i].setImageResource(R.drawable.check_green);
-                                }else if(tagdata.getFlag()==0){
+                                } else if (tagdata2.getFlag() == 0) {
                                     sizeTypeCheckArray[i].setImageResource(0);
                                     sizeTypeCheckArray[i].setImageResource(R.drawable.check_red);
-                                }else{
+                                } else {
                                     sizeTypeCheckArray[i].setImageResource(0);
                                     sizeTypeCheckArray[i].setImageResource(R.drawable.check_grey);
                                 }
@@ -344,7 +343,7 @@ public class CameraMeasureActivity extends BaseActivity {
 
                 for (int i = 0; i < sizeTypeAndSize.length; i++) {
                     SizeTypeIDAndFlagData tagdata = (SizeTypeIDAndFlagData) sizeTypeTabArray[i].getTag();
-                    if ((tagdata.getSizeTypeID()+"").equals(selectedID)) {
+                    if ((tagdata.getSizeTypeID() + "").equals(selectedID)) {
                         finalSelectedIDlocation = i;
                     }
                 }
@@ -352,31 +351,31 @@ public class CameraMeasureActivity extends BaseActivity {
 
 
                 //최종 플래그 검사
-                for(int i = 0 ; i <sizeTypeTabArray.length ; i++){
-                    SizeTypeIDAndFlagData tagdata = (SizeTypeIDAndFlagData)sizeTypeTabArray[i].getTag();
-                    Log.i("flag 검사 결과 "+ i, tagdata.getFlag()+"");
-                    if(tagdata.getFlag() == 0 || tagdata.getFlag() == 1 ){ // 유효성 ok
+                for (int i = 0; i < sizeTypeTabArray.length; i++) {
+                    SizeTypeIDAndFlagData tagdata = (SizeTypeIDAndFlagData) sizeTypeTabArray[i].getTag();
+                    Log.i("flag 검사 결과 " + i, tagdata.getFlag() + "");
+                    if (tagdata.getFlag() == 1 || tagdata.getFlag() == 2) { // 유효성 ok
                         totalFlag = true;
-                    }else{
+                    } else {
                         totalFlag = false;
                         break;
                     }
                 }
 
-                    RequestParams params = new RequestParams();
-                    params.put("UserPKey", "2087");
-                    params.put("CategoryID", strCategoryPkey);
+                RequestParams params = new RequestParams();
+                params.put("UserPKey", "2087");
+                params.put("CategoryID", strCategoryPkey);
 //                params.put("Name",name);
-                    params.put("Name", "AndroidTest");
-                    params.put("SizetypeAndSize", sizeTypeAndSize);
-                    Log.i("totalFlag",totalFlag+"");
-                if(totalFlag){
+                params.put("Name", name);
+                params.put("SizetypeAndSize", sizeTypeAndSize);
+                Log.i("totalFlag", totalFlag + "");
+                if (totalFlag) {
 
                     HttpClient.post("/sizeax/CHS/php/insertusersize.php", params, new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             System.out.println("Result >>>>>> " + new String(responseBody));
-                            Toast.makeText(mContext,new String(responseBody),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, new String(responseBody), Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -384,7 +383,7 @@ public class CameraMeasureActivity extends BaseActivity {
                             System.out.println("Result >>>>>> ERROR");
                         }
                     });
-                }else{
+                } else {
                     Toast.makeText(mContext, "Error", Toast.LENGTH_SHORT).show();
                 }
 
@@ -397,11 +396,11 @@ public class CameraMeasureActivity extends BaseActivity {
 
 
     public void limitConditionFunc() {
-        SizeTypeIDAndFlagData tagdata_et = (SizeTypeIDAndFlagData)(detailSizeET.getTag());
+        SizeTypeIDAndFlagData tagdata_et = (SizeTypeIDAndFlagData) (detailSizeET.getTag());
         int sizetypeid = tagdata_et.getSizeTypeID();
-        int size = 0;
+        float size = 0f;
         if (!detailSizeET.getText().toString().equals("")) {
-            size = Integer.parseInt(detailSizeET.getText().toString());
+            size = Float.parseFloat(detailSizeET.getText().toString());
         }
 
 
@@ -425,7 +424,7 @@ public class CameraMeasureActivity extends BaseActivity {
                 cautionTxt.setVisibility(View.INVISIBLE);
             }
         } else {
-            if(detailSizeET.getText().length() == 0){
+            if (detailSizeET.getText().length() == 0) {
                 tagdata_et.setFlag(1);
                 cautionTxt.setVisibility(View.INVISIBLE);
             } else if (size < minimum_restrict[sizetypeid - 1]) {
@@ -443,7 +442,7 @@ public class CameraMeasureActivity extends BaseActivity {
         }
         for (int i = 0; i < sizeTypeAndSize.length; i++) {
             SizeTypeIDAndFlagData tagdata_tab = (SizeTypeIDAndFlagData) sizeTypeTabArray[i].getTag();
-            if (tagdata_tab.getSizeTypeID()==sizetypeid) {
+            if (tagdata_tab.getSizeTypeID() == sizetypeid) {
                 sizeTypeTabArray[i].setTag(tagdata_tab);
                 break;
             }
@@ -456,6 +455,39 @@ public class CameraMeasureActivity extends BaseActivity {
         super.setCustomActionBar();
         TextView title = (TextView) findViewById(R.id.title);
         title.setText("카메라 측정");
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+
+        // LayoutInflater를 통해 위의 custom layout을 AlertDialog에 반영. 이 외에는 거의 동일하다.
+        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.signup_dialog, null);
+        TextView customTitle = (TextView) view.findViewById(R.id.customtitle);
+        ImageView custonImage = (ImageView)view.findViewById(R.id.customdialogicon);
+        custonImage.setVisibility(View.GONE);
+        customTitle.setText("입력하신 내용이 저장되지 않습니다. \n 계속하시겠습니까?");
+        customTitle.setTextColor(Color.BLACK);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setView(view);
+        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+//                finish();
+                CameraMeasureActivity.super.onBackPressed();
+
+            }
+        });
+        builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
 
     @Override

@@ -407,6 +407,12 @@ public class Show2Activity extends BaseActivity {
 
                         SignupInformation3Activity.sizeEdit.setText(Float.parseFloat(form.format(realLine)) + "");
 
+                        CreateLogo createLogo = new CreateLogo();
+                        createLogo.mContext = mContext;
+                        createLogo.setBaseBitmap(resultBitmap);
+                        createLogo.setCardDotList(cardDotList);
+                        createLogo.logoProcess();
+
                     } else if (caseFlag.contains("2")) { // 추가 입력
                         // 전역 DotList에 마지막 카드점의 두 위치 저장
                         // 추가 과정 도중 수정될 가능성도 고려
@@ -426,11 +432,7 @@ public class Show2Activity extends BaseActivity {
 
                 cardLengthTxt2.setText(Math.round(realLine * 100f) / 100f + "cm입니다.");
                 // 카드 로고로 가리고 저장
-                CreateLogo createLogo = new CreateLogo();
-                createLogo.mContext = mContext;
-                createLogo.setBaseBitmap(resultBitmap);
-                createLogo.setCardDotList(cardDotList);
-                createLogo.logoProcess();
+
 
 
             }

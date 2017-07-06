@@ -64,7 +64,11 @@
 
             android:background="@drawable/edittext_background"
             android:textSize="10dp"
-            android:hint="ex)반팔티셔츠"/>
+            android:hint="ex)반팔티셔츠"
+            android:singleLine="true"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            />
     </LinearLayout>
 
     <LinearLayout

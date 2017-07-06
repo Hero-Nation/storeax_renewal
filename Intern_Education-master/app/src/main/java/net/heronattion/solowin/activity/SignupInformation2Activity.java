@@ -3,6 +3,7 @@ package net.heronattion.solowin.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -88,15 +89,21 @@ public class SignupInformation2Activity extends BaseActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(mContext, SignupInformation3Activity.class);
-                name = textView2.getText().toString();
-                intent.putExtra("PKey", strCategoryPkey);
-                intent.putExtra("Name", name);
+                if(textView2.getText().length() == 0){
+//                    Snackbar.make(getWindow().getDecorView().getRootView(), "이름을 입력해주세요", Snackbar.LENGTH_SHORT).setAction("Action",null).show();
+                    Toast.makeText(mContext,"이름을 입력해주세요",Toast.LENGTH_SHORT).show();
+                }else {
 
-                Log.i("Category Pkey: ", strCategoryPkey);
-                Log.i("textView : ", textView2.getText().toString());
-                startActivity(intent);
-                finish();
+                    Intent intent = new Intent(mContext, SignupInformation3Activity.class);
+                    name = textView2.getText().toString();
+                    intent.putExtra("PKey", strCategoryPkey);
+                    intent.putExtra("Name", name);
+
+                    Log.i("Category Pkey: ", strCategoryPkey);
+                    Log.i("textView : ", textView2.getText().toString());
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }
