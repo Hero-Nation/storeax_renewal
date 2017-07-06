@@ -58,6 +58,53 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+    public void setFragmentActionBar() {
+
+        ActionBar myActionBar = getSupportActionBar();
+        myActionBar.setDisplayShowHomeEnabled(false);
+        myActionBar.setDisplayHomeAsUpEnabled(true);
+        myActionBar.setDisplayShowTitleEnabled(false);
+        myActionBar.setDisplayShowCustomEnabled(true);
+        myActionBar.setHomeButtonEnabled(true);
+
+        myActionBar.setHomeAsUpIndicator(R.mipmap.hambutton);
+
+        LayoutInflater inf = LayoutInflater.from(mContext);
+        View customBarView = inf.inflate(R.layout.main_action_bar, null);
+
+        myActionBar.setCustomView(customBarView);
+        myActionBar.setDisplayShowCustomEnabled(true);
+
+        Toolbar parent = (Toolbar) customBarView.getParent();
+        parent.setContentInsetsAbsolute(0, 0);
+        getSupportActionBar().setElevation(0);
+
+    }
+
+    public void setSearchActionBar() {
+
+        ActionBar myActionBar = getSupportActionBar();
+        myActionBar.setDisplayShowHomeEnabled(false);
+        myActionBar.setDisplayHomeAsUpEnabled(true);
+        myActionBar.setDisplayShowTitleEnabled(false);
+        myActionBar.setDisplayShowCustomEnabled(true);
+
+        myActionBar.setHomeAsUpIndicator(R.mipmap.backbutton);
+
+        LayoutInflater inf = LayoutInflater.from(mContext);
+        View customBarView = inf.inflate(R.layout.search_action_bar, null);
+
+        myActionBar.setCustomView(customBarView);
+        myActionBar.setDisplayShowCustomEnabled(true);
+
+        Toolbar parent = (Toolbar) customBarView.getParent();
+        parent.setContentInsetsAbsolute(0, 0);
+        getSupportActionBar().setElevation(0);
+
+        backBtn = (ImageView) customBarView.findViewById(R.id.backBtn);
+
+    }
+
     public void setupEvents() {
 
     }

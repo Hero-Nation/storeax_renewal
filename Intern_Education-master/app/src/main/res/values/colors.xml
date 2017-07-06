@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#000</color>
-    <color name="colorPrimaryDark">#000</color>
+
     <color name="colorAccent">#FF4081</color>
 
     <color name="colorBackground">#7623d7</color>
@@ -14,4 +13,39 @@
     <color name="main_floating_user_name">#34D8CF</color>
 
     <color name="black_overlay">#66000000</color>
+
+    <!--            -->
+    <!--<color name="colorBackground">#ffffff</color>-->
+    <color name="colorPrimary">#7623d7</color>
+    <color name="colorPrimaryDark">#3F51B5</color>
+
+    // 메인
+    <!--<color name="titlebar_background">#7623d7</color>-->
+
+    <color name="viewpager_background">#e7e7e7</color>
+
+    <color name="tab_txt_selected">#ffffff</color>
+    <color name="tab_txt_unselected">#999999</color>
+
+    <color name="tab_background_selected">#7623d7</color>
+    <color name="tab_background_unselected">#ffffff</color>
+
+    // 즐겨찾기
+    <color name="favorite_btn_bg">#ffffff</color>
+    <color name="favorite_btn_txt_selected">#7623d7</color>
+    <color name="favorite_btn_txt_unselected">#999999</color>
+
+    // 브랜드 검색
+    <color name="search_title_txt">#444444</color>
+
+    <color name="sex_background_selected">#7623d7</color>
+    <color name="sex_background_unselected">#d7d7d7</color>
+    <color name="sex_txt_selected">#7623d7</color>
+    <color name="sex_txt_unselected">#999999</color>
+
+    // 네비게이션 메뉴
+    <color name="navigation_menu_txt">#000000</color>
+
+
+
 </resources>

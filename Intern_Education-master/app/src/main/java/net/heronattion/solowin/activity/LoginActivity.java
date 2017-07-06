@@ -2,6 +2,7 @@ package net.heronattion.solowin.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -127,6 +128,7 @@ public class LoginActivity extends BaseActivity {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 //TODO : 통신에 성공했을 때 이벤트를 적어주면 됨
                 String response = new String(responseBody);
+                Log.e("testLogin", response);
                 switch (response) {
                     case "id_pw_empty":
                         Toast.makeText(LoginActivity.this, "아이디가 비었습니다.", Toast.LENGTH_SHORT).show();
@@ -141,10 +143,10 @@ public class LoginActivity extends BaseActivity {
                         break;
 
                     default:
-
-                        Toast.makeText(LoginActivity.this, R.string.login_welcome_message, Toast.LENGTH_SHORT).show();
-//                        intentActivity(getApplicationContext(), ProductListActivity.class);
-
+                        Intent intent = new Intent(mContext, FragmentActivity.class);
+                        intent.putExtra("UserPKey",response);
+                        startActivity(intent);
+                        finish();
                         break;
                 }
 

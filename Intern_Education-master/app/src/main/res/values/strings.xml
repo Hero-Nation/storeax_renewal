@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SoloWin</string>
+    <string name="app_name">SizeAx</string>
 
     <!-- 공용 -->
 
@@ -40,4 +40,16 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_camera_temp">CameraTempActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="server_error_message">죄송합니다. 서버가 불안정하니 다시 시도해주세요.</string>
+
+
+    <string name="unselectedBtn">unselectedBtn</string>
+    <string name="selectedBtn">selectedBtn</string>
+
+    <string name="open"></string>
+    <string name="close"></string>
 </resources>

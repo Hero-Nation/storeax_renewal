@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    // 클릭했을 때
+    <item android:state_focused="false" android:state_pressed="true">
+        <shape>
+            <padding android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp" />
+            <gradient android:angle="270" android:endColor="#ffe619" android:startColor="#ffe619" />
+            <corners android:radius="300dp"/>
+        </shape>
+    </item>
+
+    //클릭하지 않았을 때
+    <item android:state_focused="false" android:state_pressed="false">
+        <shape>
+            <padding android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp" />
+            <solid android:color="#d7d7d7" /> // 배경색
+            <corners android:radius="300dp"/>
+        </shape>
+    </item>
+</selector>

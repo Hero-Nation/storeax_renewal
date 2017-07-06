@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.*;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -35,18 +36,18 @@ public class SignupInformation2Activity extends BaseActivity {
     private android.widget.EditText textView2;
     private android.widget.TextView nextButton2;
     private LinearLayout linCategory;
-    private android.widget.ScrollView scCategory;
     private android.widget.LinearLayout signupInformation2;
+    private TextView skipButton;
 
     //브랜드, 카테고리, 색상, 스타일 데이터를 파싱하기 위한 변수
-    private String[] mOptionListItem, sCategoryList, selCategoryPkey;
+    private String[] mOptionListItem, selCategoryPkey;
     private String[][] mStyleItem;
     private String[][] mBrandItem;
     private String[][] mColorItem;
     private String[][] mCategoryItem;
 
     //파싱된 데이터를 활용하여 버튼 동적할당
-    private CheckBox[] chCategoryArray, chStyleArray, chBrandArray, chColorArray;
+    private CheckBox[] chCategoryArray;
 
     static public String strCategoryPkey;
     static public String name;
@@ -71,7 +72,7 @@ public class SignupInformation2Activity extends BaseActivity {
 
         manFlag = getIntent().getIntExtra("manFlag", 0);
         womanFlag = getIntent().getIntExtra("womanFlag", 0);
-        sCategoryList = new String[]{};
+//        sCategoryList = new String[]{};
 
         bindViews();
         setupEvents();
@@ -106,13 +107,22 @@ public class SignupInformation2Activity extends BaseActivity {
                 }
             }
         });
+        skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, FragmentActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
     public void bindViews() {
         this.nextButton2 = (TextView) findViewById(R.id.nextButton2);
         this.textView2 = (EditText) findViewById(R.id.textView2);
-        this.scCategory = (ScrollView) findViewById(R.id.scCategory);
+        this.skipButton = (TextView) findViewById(R.id.skipSignup2);
+//        this.scCategory = (ScrollView) findViewById(R.id.scCategory);
         this.linCategory = (LinearLayout) findViewById(R.id.linCategory);
         this.signupInformation2 = (LinearLayout) findViewById(R.id.signupInformation2);
     }
@@ -154,9 +164,6 @@ public class SignupInformation2Activity extends BaseActivity {
                 mCategoryItem = parse.getDoubleArrayData(mOptionListItem[3]);
 
                 //동적할당을 위한 체크박스 배열에 생성할 갯수만큼 초기화
-                chStyleArray = new CheckBox[mStyleItem.length];
-                chBrandArray = new CheckBox[mBrandItem.length];
-                chColorArray = new CheckBox[mColorItem.length];
                 chCategoryArray = new CheckBox[mCategoryItem.length];
 
                 //체크박스 디자인 및 동적할당 => 레이아웃에 집어넣음
@@ -284,7 +291,7 @@ public class SignupInformation2Activity extends BaseActivity {
                 LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
-                p.setMargins(0, 25, 0, 0);
+                p.setMargins(0, 10, 0, 0);
                 linOptionLayout.setLayoutParams(p);
                 linOptionLayout.setOrientation(LinearLayout.HORIZONTAL);
                 // 4개씩만 출력하기 위해 리니어 레이아웃에 버튼이 4개 들어가면 새로운 레이아웃 생성 후 삽입
@@ -332,13 +339,6 @@ public class SignupInformation2Activity extends BaseActivity {
                     linLayout.addView(linOptionLayout);
                 }
             }
-        }
-    }
-
-    private void setFilter() {
-        if (!strCategoryPkey.equals("")) {
-            selCategoryPkey = strCategoryPkey.split("/");
-            sCategoryList = selCategoryPkey;
         }
     }
 }
