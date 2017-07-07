@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,11 @@ import com.loopj.android.http.RequestParams;
 
 import net.heronattion.solowin.R;
 import net.heronattion.solowin.network.HttpClient;
+import net.heronattion.solowin.util.ParseData;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -58,7 +64,6 @@ public class SignupActivity extends BaseActivity{
     private android.widget.LinearLayout idLayout;
     private android.widget.LinearLayout passwordLayout;
     private android.widget.LinearLayout passwordCheckLayout;
-//    private String Email_PATTERN = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -372,11 +377,6 @@ public class SignupActivity extends BaseActivity{
                 }
                 else {
                     signupButtonEvent();
-                    Intent intent = new Intent(mContext, SignupInformationActivity.class);
-                    intent.putExtra("manFlag", manFlag);
-                    intent.putExtra("womanFlag", womanFlag);
-                    startActivity(intent);
-                    finish();
                 }
             }
         });
@@ -447,6 +447,11 @@ public class SignupActivity extends BaseActivity{
                 switch(response) {
                     case "success" :
                         Toast.makeText(SignupActivity.this, "가입이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(mContext, SignupInformationActivity.class);
+                        intent.putExtra("manFlag", manFlag);
+                        intent.putExtra("womanFlag", womanFlag);
+                        startActivity(intent);
+                        finish();
                         break;
                     case "duplicated":
                         Toast.makeText(SignupActivity.this, "중복된 이메일입니다.", Toast.LENGTH_SHORT).show();
@@ -483,12 +488,4 @@ public class SignupActivity extends BaseActivity{
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-//    public static boolean checkEmail(String email){
-//        Pattern p = Pattern.compile(regex);
-//        Matcher m = p.matcher(email);
-//        boolean isNormal = m.matches();
-//        return isNormal;
-//    }
-
-
 }

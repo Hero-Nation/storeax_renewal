@@ -3,7 +3,6 @@ package net.heronattion.solowin.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -32,11 +31,11 @@ import cz.msebera.android.httpclient.Header;
 
 public class SignupInformation2Activity extends BaseActivity {
 
-    private android.widget.EditText textView2;
-    private android.widget.TextView nextButton2;
+    private EditText textView2;
+    private TextView nextButton2;
     private LinearLayout linCategory;
-    private android.widget.ScrollView scCategory;
-    private android.widget.LinearLayout signupInformation2;
+    private ScrollView scCategory;
+    private LinearLayout signupInformation2;
 
     //브랜드, 카테고리, 색상, 스타일 데이터를 파싱하기 위한 변수
     private String[] mOptionListItem, sCategoryList, selCategoryPkey;
@@ -53,8 +52,9 @@ public class SignupInformation2Activity extends BaseActivity {
     private int categoryFlag = 0;
     private int manFlag;
     private int womanFlag;
-//    private int checkboxFlag = 0;
+    //    private int checkboxFlag = 0;
     private int i;
+    private TextView skipSignup2;
 
 
     @Override
@@ -103,16 +103,19 @@ public class SignupInformation2Activity extends BaseActivity {
                 }
             }
         });
+
+
     }
 
     @Override
     public void bindViews() {
+        this.signupInformation2 = (LinearLayout) findViewById(R.id.signupInformation2);
         this.nextButton2 = (TextView) findViewById(R.id.nextButton2);
+        this.skipSignup2 = (TextView) findViewById(R.id.skipSignup2);
         this.textView2 = (EditText) findViewById(R.id.textView2);
         this.scCategory = (ScrollView) findViewById(R.id.scCategory);
         this.linCategory = (LinearLayout) findViewById(R.id.linCategory);
-        this.signupInformation2 = (LinearLayout) findViewById(R.id.signupInformation2);
-    }
+   }
 
     private void parsingOptions() {
 
@@ -164,6 +167,15 @@ public class SignupInformation2Activity extends BaseActivity {
                 Toast.makeText(mContext, "죄송합니다. 서버와 연결이 불안정합니다.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        skipSignup2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, FragmentActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     public void createDynamicCheckBox(final CheckBox[] checkBoxes, LinearLayout linLayout, String[][] itemArray) {
@@ -209,7 +221,7 @@ public class SignupInformation2Activity extends BaseActivity {
                 checkBoxes[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked && (int)buttonView.getTag() == 0) {
+                        if (isChecked && (int) buttonView.getTag() == 0) {
                             for (int j = 0; j < checkBoxes.length; j++) {
                                 checkBoxes[j].setTag(0);
                                 checkBoxes[j].setBackgroundResource(R.drawable.signup_border);
@@ -254,7 +266,7 @@ public class SignupInformation2Activity extends BaseActivity {
                 checkBoxes[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked && (int)buttonView.getTag() == 0) {
+                        if (isChecked && (int) buttonView.getTag() == 0) {
                             for (int j = 0; j < checkBoxes.length; j++) {
                                 checkBoxes[j].setTag(0);
                                 checkBoxes[j].setBackgroundResource(R.drawable.signup_border);

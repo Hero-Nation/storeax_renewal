@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -43,11 +42,11 @@ import static net.heronattion.solowin.activity.SignupInformation3Activity.sizeEd
 
 public class CameraMeasureActivity extends BaseActivity {
 
-    private android.widget.LinearLayout sizeTypeTab1;
-    private android.widget.LinearLayout sizeTypeTab2;
-    private android.widget.LinearLayout sizeTypeTab3;
-    private android.widget.LinearLayout sizeTypeTab4;
-    private android.widget.LinearLayout sizeTypeTab5;
+    private LinearLayout sizeTypeTab1;
+    private LinearLayout sizeTypeTab2;
+    private LinearLayout sizeTypeTab3;
+    private LinearLayout sizeTypeTab4;
+    private LinearLayout sizeTypeTab5;
 
     private TextView sizeTypeNameTxt1;
     private TextView sizeTypeNameTxt2;
@@ -55,11 +54,11 @@ public class CameraMeasureActivity extends BaseActivity {
     private TextView sizeTypeNameTxt4;
     private TextView sizeTypeNameTxt5;
 
-    private android.widget.ImageView sizeTypeCheckImg1;
-    private android.widget.ImageView sizeTypeCheckImg2;
-    private android.widget.ImageView sizeTypeCheckImg3;
-    private android.widget.ImageView sizeTypeCheckImg4;
-    private android.widget.ImageView sizeTypeCheckImg5;
+    private ImageView sizeTypeCheckImg1;
+    private ImageView sizeTypeCheckImg2;
+    private ImageView sizeTypeCheckImg3;
+    private ImageView sizeTypeCheckImg4;
+    private ImageView sizeTypeCheckImg5;
 
     private TextView selectedSizeTypeNameTxt;
     private TextView skipBtn;
@@ -70,7 +69,7 @@ public class CameraMeasureActivity extends BaseActivity {
     private ImageView[] sizeTypeCheckArray;
 
     private RequestParams params;
-    static public android.widget.EditText detailSizeET;
+    static public EditText detailSizeET;
 
     private String selectedID;
 
@@ -379,12 +378,22 @@ public class CameraMeasureActivity extends BaseActivity {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             System.out.println("Result >>>>>> " + new String(responseBody));
-                            Toast.makeText(mContext, new String(responseBody), Toast.LENGTH_SHORT).show();
+
+                            if(new String(responseBody).contains("success")){
+                                Toast.makeText(mContext, "성공적으로 저장되었습니다." , Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(mContext, FragmentActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }else{
+                                Toast.makeText(mContext, "저장도중 문제가 발생하였습니다." , Toast.LENGTH_SHORT).show();
+                            }
+
                         }
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                             System.out.println("Result >>>>>> ERROR");
+                            Toast.makeText(mContext, "죄송합니다. 네트워크 상의 에러가 있습니다. "  , Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {
@@ -396,6 +405,38 @@ public class CameraMeasureActivity extends BaseActivity {
         });
 
 
+        skipBtn.setOnClickListener(new View.OnClickListener() { // 취소 버튼
+            @Override
+            public void onClick(View v) {
+                // LayoutInflater를 통해 위의 custom layout을 AlertDialog에 반영. 이 외에는 거의 동일하다.
+                LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                View view = inflater.inflate(R.layout.signup_dialog, null);
+                TextView customTitle = (TextView) view.findViewById(R.id.customtitle);
+                ImageView custonImage = (ImageView)view.findViewById(R.id.customdialogicon);
+                custonImage.setVisibility(View.GONE);
+                customTitle.setText("입력하신 내용이 저장되지 않습니다. \n 계속하시겠습니까?");
+                customTitle.setTextColor(Color.BLACK);
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setView(view);
+                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+//                finish();
+                        CameraMeasureActivity.super.onBackPressed();
+
+                    }
+                });
+                builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+            }
+        });
     }
 
 

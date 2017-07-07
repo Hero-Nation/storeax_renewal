@@ -37,6 +37,7 @@ public class SignupInformationActivity extends BaseActivity {
 
     private android.widget.Spinner spinner1;
     private TextView nextButton;
+    private TextView skipButton;
     private android.widget.LinearLayout linSignupStyle;
 
     private String userPkey;
@@ -120,6 +121,7 @@ public class SignupInformationActivity extends BaseActivity {
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                         //TODO : 통신에 성공했을 때 이벤트를 적어주면 됨
                         String response = new String(responseBody);
+                        Log.e("responseSign", response);
                         switch(response) {
                             case "success" :
                                 Toast.makeText(SignupInformationActivity.this, "정보가 저장되었습니다.", Toast.LENGTH_SHORT).show();
@@ -147,11 +149,23 @@ public class SignupInformationActivity extends BaseActivity {
 
             }
         });
+
+        skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, SignupInformation2Activity.class);
+                intent.putExtra("manFlag", manFlag);
+                intent.putExtra("womanFlag", womanFlag);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
     public void bindViews() {
         this.nextButton = (TextView) findViewById(R.id.nextButton);
+        this.skipButton = (TextView) findViewById(R.id.skipSignup1);
         this.scSignupAdd2 = (ScrollView) findViewById(R.id.scSignupAdd2);
         this.linSignupStyle = (LinearLayout) findViewById(R.id.linSignupStyle);
         this.Day = (Spinner) findViewById(R.id.Day);

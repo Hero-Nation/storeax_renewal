@@ -18,7 +18,6 @@ import com.loopj.android.http.RequestParams;
 
 import net.heronattion.solowin.R;
 import net.heronattion.solowin.camera.Data.DotData;
-import net.heronattion.solowin.data.SizeTypeIDAndFlagData;
 import net.heronattion.solowin.network.HttpClient;
 
 import org.json.JSONArray;
@@ -59,11 +58,13 @@ public class SignupInformation3Activity extends BaseActivity {
     int necessaryPartID;
     String necessaryPartName;
     int jsonLength;
+    private TextView skipSignup3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signupinformation3);
+
         signupInfoActivity3 = this;
         setCustomActionBar();
         TextView title = (TextView) findViewById(R.id.title);
@@ -199,7 +200,18 @@ public class SignupInformation3Activity extends BaseActivity {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             String s = new String(responseBody);
-                            Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
+                            if(new String(responseBody).contains("success")){
+                                Toast.makeText(mContext, "성공적으로 저장되었습니다." , Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(mContext, FragmentActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }else{
+                                Toast.makeText(mContext, "저장도중 문제가 발생하였습니다." , Toast.LENGTH_SHORT).show();
+                            }
+
+
+
                         }
 
                         @Override
@@ -216,13 +228,23 @@ public class SignupInformation3Activity extends BaseActivity {
 
             }
         });
+
+        skipSignup3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, FragmentActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
     public void bindViews() {
         this.nextButton3 = (TextView) findViewById(R.id.nextButton3);
-        this.sizeEdit = (EditText) findViewById(R.id.sizeEdit);
+        this.skipSignup3 = (TextView) findViewById(R.id.skipSignup3);
         this.addSize = (TextView) findViewById(R.id.addSize);
+        this.sizeEdit = (EditText) findViewById(R.id.sizeEdit);
     }
 
 

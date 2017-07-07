@@ -403,7 +403,7 @@
                     android:background="@drawable/cancelbutton"
                     android:gravity="center"
 
-                    android:text="skip"
+                    android:text="취소"
                     android:textColor="#FFFFFF"
                     android:textSize="15dp" />
 
@@ -419,7 +419,7 @@
                     android:layout_weight="0.45"
                     android:background="@drawable/button"
                     android:gravity="center"
-                    android:text="다음"
+                    android:text="완료"
                     android:textColor="#FFFFFF"
                     android:textSize="15dp" />
             </LinearLayout>

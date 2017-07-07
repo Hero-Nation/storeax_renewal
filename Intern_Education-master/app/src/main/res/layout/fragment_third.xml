@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/viewpager_background"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    tools:context="com.example.heronation.sizeax.activity.FragmentActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:orientation="horizontal"
+        android:gravity="right">
+
+        <Button
+            android:layout_width="149dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="1px"
+            android:text="스타일 재설정"
+            android:textSize="14dp"
+            android:textColor="#ffffff"
+            android:gravity="center_vertical|center_horizontal"
+
+            android:background="@drawable/brandsetbutton"
+            />
+
+    </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+
+</LinearLayout>

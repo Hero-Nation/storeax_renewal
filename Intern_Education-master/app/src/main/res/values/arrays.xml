@@ -119,4 +119,21 @@
         <item>1951</item>
         <item>1950</item>
     </string-array>
+
+    <string name="category">카테고리</string>
+    <string-array name="category_array">
+        <item>카테고리</item>
+        <item>티셔츠</item>
+        <item>블라우스</item>
+        <item>셔츠</item>
+        <item>바지</item>
+        <item>스커트</item>
+    </string-array>
+
+    <string name="myclothset">내옷장</string>
+    <string-array name="myclothset_array">
+        <item>내 옷장 보기</item>
+        <item>티셔츠 S</item>
+        <item>티셔츠 M</item>
+    </string-array>
 </resources>

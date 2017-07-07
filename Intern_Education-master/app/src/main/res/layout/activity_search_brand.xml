@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:rsb="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/viewpager_background"
+    android:fillViewport="true"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="성별"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:textColor="@color/search_title_txt"
+                android:paddingBottom="5dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/brandsexwomen"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="40dp"
+                    android:text="여성"
+                    android:textSize="14dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textColor="@drawable/search_color_selector"
+                    android:background="@drawable/search_bg_selector"
+                    android:layout_marginRight="5dp"/>
+
+                <TextView
+                    android:id="@+id/brandsexman"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="40dp"
+                    android:text="남성"
+                    android:textSize="14dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textColor="@drawable/search_color_selector"
+                    android:background="@drawable/search_bg_selector"
+                    android:layout_marginLeft="5dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="연령대"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:textColor="@color/search_title_txt"
+                android:paddingBottom="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/brandage10"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="40dp"
+                        android:text="10대"
+                        android:textSize="14dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="@drawable/search_color_selector"
+                        android:background="@drawable/search_bg_selector"
+                        android:layout_marginRight="10dp"/>
+
+                    <TextView
+                        android:id="@+id/brandage20"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="40dp"
+                        android:text="20대 초반"
+                        android:textSize="14dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="@drawable/search_color_selector"
+                        android:background="@drawable/search_bg_selector"
+                        android:layout_marginRight="10dp"/>
+
+                    <TextView
+                        android:id="@+id/brandage25"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="40dp"
+                        android:text="20대 중반"
+                        android:textSize="14dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="@drawable/search_color_selector"
+                        android:background="@drawable/search_bg_selector"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:id="@+id/brandage29"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="40dp"
+                        android:text="20대 후반"
+                        android:textSize="14dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="@drawable/search_color_selector"
+                        android:background="@drawable/search_bg_selector"
+                        android:layout_marginRight="10dp"/>
+
+                    <TextView
+                        android:id="@+id/brandage30"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="40dp"
+                        android:text="30대 초반"
+                        android:textSize="14dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="@drawable/search_color_selector"
+                        android:background="@drawable/search_bg_selector"
+                        android:layout_marginRight="10dp"/>
+
+                    <TextView
+                        android:id="@+id/brandage35"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="40dp"
+                        android:text="30대 중반"
+                        android:textSize="14dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="@drawable/search_color_selector"
+                        android:background="@drawable/search_bg_selector"/>
+
+                </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="스타일"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:textColor="@color/search_title_txt"
+                android:paddingBottom="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/llSearchStyle">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="40dp"
+                            android:text="모던"
+                            android:textSize="14dp"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textColor="@drawable/search_color_selector"
+                            android:background="@drawable/search_bg_selector"
+                            android:layout_marginRight="10dp"/>
+
+                        <TextView
+
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="40dp"
+                            android:text="트렌드"
+                            android:textSize="14dp"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textColor="@drawable/search_color_selector"
+                            android:background="@drawable/search_bg_selector"
+                            android:layout_marginRight="10dp"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="40dp"
+                            android:text="댄디"
+                            android:textSize="14dp"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textColor="@drawable/search_color_selector"
+                            android:background="@drawable/search_bg_selector"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="20dp">
+
+            <Button
+                android:id="@+id/saveBrandButton"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:text="적용하기"
+                android:textSize="14dp"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:gravity="center_vertical|center_horizontal"
+
+                android:background="@drawable/brandsetbutton" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

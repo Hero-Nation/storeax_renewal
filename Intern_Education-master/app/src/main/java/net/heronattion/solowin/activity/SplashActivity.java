@@ -2,6 +2,7 @@ package net.heronattion.solowin.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import net.heronattion.solowin.util.ContextUtil;
 import cz.msebera.android.httpclient.Header;
 
 import static com.loopj.android.http.AsyncHttpClient.log;
+import static java.lang.Integer.parseInt;
 
 public class SplashActivity extends BaseActivity {
     Button loginButton;
@@ -30,12 +32,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
         setupEvents();
-
-
-
-
         loginButton = (Button) findViewById(R.id.loginButton);
         signupButton = (Button) findViewById(R.id.signupButton);
 
@@ -44,7 +41,7 @@ public class SplashActivity extends BaseActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 startActivity(intent);
-                finish();
+//                finish();
             }
         });
 
@@ -146,22 +143,23 @@ public class SplashActivity extends BaseActivity {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 //TODO : 통신에 성공했을 때 이벤트를 적어주면 됨
                 String response = new String(responseBody);
+                Log.d("responseLogin",response);
                 switch(response) {
                     case "id_pw_empty" :
-                        Toast.makeText(SplashActivity.this, "로그인 실패.", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(SplashActivity.this, "로그인 실패.", Toast.LENGTH_SHORT).show();
                     case "fail" :
-                        Toast.makeText(SplashActivity.this, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(SplashActivity.this, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show();
                         break;
 
                     case "server_connect_fail":
                         Toast.makeText(SplashActivity.this, "서버 연결이 불안정합니다.", Toast.LENGTH_SHORT).show();
                         break;
-
-                    case "success" :
-                        Toast.makeText(SplashActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
-//                        intentActivity(getApplicationContext(), ProductListActivity.class);
-                        break;
                     default:
+                        Toast.makeText(SplashActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(mContext, FragmentActivity.class);
+                        intent.putExtra("UserPKey",response);
+                        startActivity(intent);
+                        finish();
                         break;
                 }
 
