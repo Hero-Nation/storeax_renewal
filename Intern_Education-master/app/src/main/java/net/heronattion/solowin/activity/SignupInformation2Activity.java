@@ -40,13 +40,11 @@ public class SignupInformation2Activity extends BaseActivity {
 
     //브랜드, 카테고리, 색상, 스타일 데이터를 파싱하기 위한 변수
     private String[] mOptionListItem, sCategoryList, selCategoryPkey;
-    private String[][] mStyleItem;
-    private String[][] mBrandItem;
-    private String[][] mColorItem;
+
     private String[][] mCategoryItem;
 
     //파싱된 데이터를 활용하여 버튼 동적할당
-    private CheckBox[] chCategoryArray, chStyleArray, chBrandArray, chColorArray;
+    private CheckBox[] chCategoryArray;
 
     static public String strCategoryPkey;
     static public String name;
@@ -55,9 +53,8 @@ public class SignupInformation2Activity extends BaseActivity {
     private int categoryFlag = 0;
     private int manFlag;
     private int womanFlag;
-    private int checkboxFlag = 0;
+//    private int checkboxFlag = 0;
     private int i;
-
 
 
     @Override
@@ -89,10 +86,10 @@ public class SignupInformation2Activity extends BaseActivity {
             @Override
             public void onClick(View view) {
 
-                if(textView2.getText().length() == 0){
+                if (textView2.getText().length() == 0) {
 //                    Snackbar.make(getWindow().getDecorView().getRootView(), "이름을 입력해주세요", Snackbar.LENGTH_SHORT).setAction("Action",null).show();
-                    Toast.makeText(mContext,"이름을 입력해주세요",Toast.LENGTH_SHORT).show();
-                }else {
+                    Toast.makeText(mContext, "이름을 입력해주세요", Toast.LENGTH_SHORT).show();
+                } else {
 
                     Intent intent = new Intent(mContext, SignupInformation3Activity.class);
                     name = textView2.getText().toString();
@@ -148,15 +145,11 @@ public class SignupInformation2Activity extends BaseActivity {
                 카테고리 요소 : Pkey, Name_Lang, ParentID
                  */
 
-                mStyleItem = parse.getDoubleArrayData(mOptionListItem[0]);
-                mBrandItem = parse.getDoubleArrayData(mOptionListItem[1]);
-                mColorItem = parse.getDoubleArrayData(mOptionListItem[2]);
+
                 mCategoryItem = parse.getDoubleArrayData(mOptionListItem[3]);
 
                 //동적할당을 위한 체크박스 배열에 생성할 갯수만큼 초기화
-                chStyleArray = new CheckBox[mStyleItem.length];
-                chBrandArray = new CheckBox[mBrandItem.length];
-                chColorArray = new CheckBox[mColorItem.length];
+
                 chCategoryArray = new CheckBox[mCategoryItem.length];
 
                 //체크박스 디자인 및 동적할당 => 레이아웃에 집어넣음
@@ -190,8 +183,8 @@ public class SignupInformation2Activity extends BaseActivity {
 
         for (i = 0; i < checkBoxes.length; i++) {
             checkBoxes[i] = new CheckBox(this);
-            manFlag = 1;
-            womanFlag = 0;
+            manFlag = 0;
+            womanFlag = 1;
             if (manFlag == 1 && itemArray[i][2].toString().equals("1")) {
                 categoryFlag = 1;
                 categoryCount++;
@@ -209,19 +202,26 @@ public class SignupInformation2Activity extends BaseActivity {
                 checkBoxes[i].setGravity(Gravity.CENTER);
                 checkBoxes[i].setLayoutParams(param);
                 checkBoxes[i].setTextColor(Color.parseColor("#999999"));
+                checkBoxes[i].setTag(0); // 0이면 선택 안됨, 1이면 선택됨
 //                checkBoxes[i].setHeight(120);
 
 
                 checkBoxes[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked && checkboxFlag==0) {
-                            checkboxFlag = 1;
+                        if (isChecked && (int)buttonView.getTag() == 0) {
+                            for (int j = 0; j < checkBoxes.length; j++) {
+                                checkBoxes[j].setTag(0);
+                                checkBoxes[j].setBackgroundResource(R.drawable.signup_border);
+                                checkBoxes[j].setTextColor(Color.parseColor("#999999"));
+
+                            }
+                            buttonView.setTag(1);
                             buttonView.setBackgroundResource(R.drawable.signup_border_check);
                             buttonView.setTextColor(Color.parseColor("#7623D7"));
-                            strCategoryPkey = buttonView.getId()+"";
+                            strCategoryPkey = buttonView.getId() + "";
                         } else {
-                            checkboxFlag = 0;
+                            buttonView.setTag(0);
                             buttonView.setBackgroundResource(R.drawable.signup_border);
                             buttonView.setTextColor(Color.parseColor("#999999"));
 
@@ -231,8 +231,7 @@ public class SignupInformation2Activity extends BaseActivity {
                         }
                     }
                 });
-            }
-            else if (womanFlag == 1 && itemArray[i][2].toString().equals("2")) {
+            } else if (womanFlag == 1 && itemArray[i][2].toString().equals("2")) {
                 categoryFlag = 2;
                 categoryCount++;
 
@@ -250,23 +249,26 @@ public class SignupInformation2Activity extends BaseActivity {
                 checkBoxes[i].setLayoutParams(param);
                 checkBoxes[i].setTextColor(Color.parseColor("#999999"));
                 checkBoxes[i].setHeight(120);
+                checkBoxes[i].setTag(0);
 
                 checkBoxes[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked && checkboxFlag==0) {
-                            checkboxFlag = 1;
+                        if (isChecked && (int)buttonView.getTag() == 0) {
+                            for (int j = 0; j < checkBoxes.length; j++) {
+                                checkBoxes[j].setTag(0);
+                                checkBoxes[j].setBackgroundResource(R.drawable.signup_border);
+                                checkBoxes[j].setTextColor(Color.parseColor("#999999"));
+
+                            }
+                            buttonView.setTag(1);
                             buttonView.setBackgroundResource(R.drawable.signup_border_check);
                             buttonView.setTextColor(Color.parseColor("#7623D7"));
-                            strCategoryPkey += buttonView.getId() + "/";
+                            strCategoryPkey = buttonView.getId() + "";
                         } else {
-                            checkboxFlag = 0;
+                            buttonView.setTag(0);
                             buttonView.setBackgroundResource(R.drawable.signup_border);
                             buttonView.setTextColor(Color.parseColor("#999999"));
-
-                            String temp = strCategoryPkey;
-                            temp = temp.replace(buttonView.getId() + "/", "");
-                            strCategoryPkey = temp;
                         }
                     }
                 });
@@ -278,7 +280,7 @@ public class SignupInformation2Activity extends BaseActivity {
         int count = 0;
 
 
-        if(categoryFlag == 1){
+        if (categoryFlag == 1) {
             while (count < 6) {
                 LinearLayout linOptionLayout = new LinearLayout(this);
                 LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
@@ -304,8 +306,7 @@ public class SignupInformation2Activity extends BaseActivity {
                     linLayout.addView(linOptionLayout);
                 }
             }
-        }
-        else if(categoryFlag == 2) {
+        } else if (categoryFlag == 2) {
             count = 6;
             while (count < 13) {
                 LinearLayout linOptionLayout = new LinearLayout(this);
@@ -321,7 +322,7 @@ public class SignupInformation2Activity extends BaseActivity {
                 // 그와중에 카테고리이면 3개씩 출력
                 if (checkBoxes == chCategoryArray) {
                     for (int j = 0; j < 3; j++) {
-                        if (count == categoryCount+6) {
+                        if (count == categoryCount + 6) {
                             break;
                         } // 4개보다 안되는 경우
                         else {

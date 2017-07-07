@@ -167,6 +167,7 @@ public class CameraMeasureActivity extends BaseActivity {
 
                         sizeTypeNameArray[i].setText(sizeName);
                         sizeTypeTabArray[i].setTag(tag);
+                        sizeTypeCheckArray[i].setVisibility(View.VISIBLE);
 
                         sizeTypeAndSize[i][0] = sizeTypeID;
                         sizeTypeAndSize[i][1] = "";
@@ -182,7 +183,10 @@ public class CameraMeasureActivity extends BaseActivity {
                 }
 
                 // 버튼 클릭 이벤트
-                for (final LinearLayout ll : sizeTypeTabArray) {
+//                for (final LinearLayout ll : sizeTypeTabArray) {
+
+                for(int k = 0 ; k < sizeTypeAndSize.length ; k++){
+                    final LinearLayout ll = sizeTypeTabArray[k];
                     ll.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -215,7 +219,7 @@ public class CameraMeasureActivity extends BaseActivity {
 
                             // 색 전부 바꾸자
 
-                            for (int i = 0; i < sizeTypeTabArray.length; i++) {
+                            for (int i = 0; i <  sizeTypeAndSize.length; i++) {
                                 SizeTypeIDAndFlagData tagdata2 = (SizeTypeIDAndFlagData) sizeTypeTabArray[i].getTag();
                                 sizeTypeTabArray[i].setBackgroundColor(Color.WHITE);
                                 sizeTypeNameArray[i].setTextColor(Color.rgb(137, 137, 137));
@@ -351,7 +355,7 @@ public class CameraMeasureActivity extends BaseActivity {
 
 
                 //최종 플래그 검사
-                for (int i = 0; i < sizeTypeTabArray.length; i++) {
+                for (int i = 0; i < sizeTypeAndSize.length; i++) {
                     SizeTypeIDAndFlagData tagdata = (SizeTypeIDAndFlagData) sizeTypeTabArray[i].getTag();
                     Log.i("flag 검사 결과 " + i, tagdata.getFlag() + "");
                     if (tagdata.getFlag() == 1 || tagdata.getFlag() == 2) { // 유효성 ok
