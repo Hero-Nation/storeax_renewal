@@ -266,7 +266,7 @@ public class SecondFragment extends Fragment {
 
     public void setValues(){
         scrollFlag = 0;
-        userID = FragmentActivity.userID;
+        userID = FragmentActivity.userPkey;
         changeSearchBtn = 0;
     }
 

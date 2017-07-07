@@ -59,7 +59,7 @@ public class MyViewHolders extends RecyclerView.ViewHolder implements View.OnCli
     }
 
     private void setValues(){
-        userID = FragmentActivity.userID;
+        userID = FragmentActivity.userPkey;
     }
 
     private void bindViews(){

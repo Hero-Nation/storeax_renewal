@@ -99,7 +99,7 @@ public class DetailBrandActivity extends BaseActivity {
         adapter = new BrandListAdapter(getApplicationContext());
 
         Intent intent = getIntent();
-        userID = FragmentActivity.userID;
+        userID = FragmentActivity.userPkey;
         mbrandKey = intent.getStringExtra("brandKey");
         mTitle = intent.getStringExtra("name");
         mLogo = intent.getStringExtra("logo");

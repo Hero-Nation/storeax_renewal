@@ -2,6 +2,7 @@ package net.heronattion.solowin.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,8 @@ public class BaseActivity extends AppCompatActivity {
 
     public ImageView backBtn;
     public TextView titleTxt;
+    public ImageView searchBtn;
+    public ImageView logo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,9 +56,10 @@ public class BaseActivity extends AppCompatActivity {
         parent.setContentInsetsAbsolute(0, 0);
         getSupportActionBar().setElevation(0);
 
-//        backBtn = (ImageView) customBarView.findViewById(R.id.backBtn);
+        backBtn = (ImageView) customBarView.findViewById(R.id.backButton);
+        logo = (ImageView) customBarView.findViewById(R.id.logo);
         titleTxt = (TextView) customBarView.findViewById(R.id.title);
-
+        searchBtn = (ImageView) customBarView.findViewById(R.id.searchBtn);
     }
 
     public void setFragmentActionBar() {
@@ -78,7 +82,7 @@ public class BaseActivity extends AppCompatActivity {
         Toolbar parent = (Toolbar) customBarView.getParent();
         parent.setContentInsetsAbsolute(0, 0);
         getSupportActionBar().setElevation(0);
-
+        searchBtn = (ImageView) customBarView.findViewById(R.id.searchBtn);
     }
 
     public void setSearchActionBar() {

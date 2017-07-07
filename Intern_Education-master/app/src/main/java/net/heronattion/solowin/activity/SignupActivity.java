@@ -394,6 +394,13 @@ public class SignupActivity extends BaseActivity{
     }
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(mContext, SplashActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
     public void bindViews() {
         super.bindViews();
 

@@ -1,9 +1,12 @@
 package net.heronattion.solowin.activity;
 
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +27,7 @@ public class FindActivity extends BaseActivity{
     TextView cancelButton;
     private android.widget.EditText findID;
     private Button findButton;
+    private ImageView backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,9 @@ public class FindActivity extends BaseActivity{
         setCustomActionBar();
 
         bindViews();
+        setCustomActionBar();
+        backButton = (ImageView) findViewById(R.id.backButton);
+        backButton.setImageResource(R.drawable.backbutton);
         setupEvents();
 
 
@@ -59,6 +66,22 @@ public class FindActivity extends BaseActivity{
             }
         });
 
+        backButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(mContext, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override

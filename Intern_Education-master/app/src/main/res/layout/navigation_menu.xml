@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.NavigationView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/design_navigation_view">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <TextView
-        android:id="@+id/userID"
+        android:id="@+id/navigationUserID"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:textSize="17dp"
@@ -15,89 +21,98 @@
         android:paddingLeft="10dp"
         android:gravity="center_vertical"/>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
-
-        <TextView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="14dp"
-            android:textColor="@color/navigation_menu_txt"
-            android:text="로그인/로그아웃"
-            android:gravity="center_vertical"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="14dp"
-            android:textColor="@color/navigation_menu_txt"
-            android:text="회원가입"
-            android:gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/navigationLogout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textSize="14dp"
+                android:textColor="@color/navigation_menu_txt"
+                android:text="로그아웃"
+                android:gravity="center_vertical"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="#d7d7d7" />
+            <TextView
+                android:id="@+id/signUpButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textSize="14dp"
+                android:textColor="@color/navigation_menu_txt"
+                android:text="회원가입"
+                android:gravity="center_vertical"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="14dp"
-            android:textColor="@color/navigation_menu_txt"
-            android:text="마이페이지"
-            android:gravity="center_vertical"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="#d7d7d7" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="14dp"
-            android:textColor="@color/navigation_menu_txt"
-            android:text="사이즈 관리"
-            android:gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/myPageButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textSize="14dp"
+                android:textColor="@color/navigation_menu_txt"
+                android:text="마이페이지"
+                android:gravity="center_vertical"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="14dp"
-            android:textColor="@color/navigation_menu_txt"
-            android:text="스타일 관리"
-            android:gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/mySizeButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textSize="14dp"
+                android:textColor="@color/navigation_menu_txt"
+                android:text="사이즈 관리"
+                android:gravity="center_vertical"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="#d7d7d7" />
+            <TextView
+                android:id="@+id/myStyleButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textSize="14dp"
+                android:textColor="@color/navigation_menu_txt"
+                android:text="스타일 관리"
+                android:gravity="center_vertical"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="14dp"
-            android:textColor="@color/navigation_menu_txt"
-            android:text="About us"
-            android:gravity="center_vertical"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="#d7d7d7" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="14dp"
-            android:textColor="@color/navigation_menu_txt"
-            android:text="이용약관"
-            android:gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/contactButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textSize="14dp"
+                android:textColor="@color/navigation_menu_txt"
+                android:text="About us"
+                android:gravity="center_vertical"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="14dp"
-            android:textColor="@color/navigation_menu_txt"
-            android:text="문의"
-            android:gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/termButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textSize="14dp"
+                android:textColor="@color/navigation_menu_txt"
+                android:text="이용약관"
+                android:gravity="center_vertical"/>
 
+            <TextView
+                android:id="@+id/inquiryButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textSize="14dp"
+                android:textColor="@color/navigation_menu_txt"
+                android:text="문의"
+                android:gravity="center_vertical"/>
+
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</android.support.design.widget.NavigationView>

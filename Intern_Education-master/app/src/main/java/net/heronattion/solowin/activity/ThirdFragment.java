@@ -195,7 +195,7 @@ public class ThirdFragment extends Fragment {
 
     private void setValues() {
         scrollFlag = 0;
-        userID = FragmentActivity.userID;
+        userID = FragmentActivity.userPkey;
         isWish = false;
     }
 

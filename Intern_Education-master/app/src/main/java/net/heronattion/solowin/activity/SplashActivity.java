@@ -41,7 +41,7 @@ public class SplashActivity extends BaseActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 startActivity(intent);
-//                finish();
+                finish();
             }
         });
 

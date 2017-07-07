@@ -43,7 +43,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewAdapter(ArrayList<BrandProductItem> items, Context context) {
         this.items = items;
         this.context = context;
-        userID = FragmentActivity.userID;
+        userID = FragmentActivity.userPkey;
 
     }
     public class ViewHolder extends RecyclerView.ViewHolder {

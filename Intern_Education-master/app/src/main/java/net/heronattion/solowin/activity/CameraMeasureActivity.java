@@ -386,11 +386,16 @@ public class CameraMeasureActivity extends BaseActivity {
                 } else {
                     Toast.makeText(mContext, "Error", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
 
+        skipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(mContext, FragmentActivity.class);
+
+            }
+        });
 
     }
 

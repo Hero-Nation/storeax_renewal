@@ -62,7 +62,7 @@ public class FirstFragment extends Fragment {
         brandDetail = (LinearLayout) layout.findViewById(R.id.brandDetail);
         listView = (ListView) layout.findViewById(R.id.lvFisrtFlagment);
         favoritebrandBtn = (ImageView) layout.findViewById(R.id.favoritebrandBtn);
-        userID = FragmentActivity.userID;
+        userID = FragmentActivity.userPkey;
         setupEvents();
 
         return layout;
@@ -81,7 +81,7 @@ public class FirstFragment extends Fragment {
                 intent.putExtra("logo", item.getLogo());
 //                intent.putExtra("favorite", item.getFavorite());
                 startActivity(intent);
-//                getActivity().finish();
+                getActivity().finish();
             }
         });
     }

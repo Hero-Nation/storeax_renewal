@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 
 import net.heronattion.solowin.R;
@@ -42,6 +43,7 @@ public class FourthFragment extends Fragment {
     private int tempCategoryID;
     private int categoryID;
     private int userID;
+    private int gender;
 
     public FourthFragment()
     {
@@ -56,6 +58,13 @@ public class FourthFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         layout = (LinearLayout) inflater.inflate(R.layout.fragment_fourth, container, false);
+        gender = 1;
+        final PersistentCookieStore myCookieStore = new PersistentCookieStore(getContext());
+        for(int i=0; i < myCookieStore.getCookies().size(); i++) {
+            if(myCookieStore.getCookies().get(i).getName().equals("UserGENDER"))
+                gender = parseInt(myCookieStore.getCookies().get(i).getValue());
+        }
+        Log.e("gender", ""+gender);
         bindViews();
         setupEvents();
         goURL(layout);
@@ -64,7 +73,7 @@ public class FourthFragment extends Fragment {
 
     public void goURL(View view){
         String url = "http://heronation.net/android/webView/myCloset.html".toString();
-        userID = FragmentActivity.userID;
+        userID = FragmentActivity.userPkey;
         String postData = "UserPKey="+userID+"&CategoryID="+tempCategoryID;
         if(categoryID != 0) postData = "UserPKey="+userID+"&CategoryID="+categoryID;
 
@@ -96,7 +105,7 @@ public class FourthFragment extends Fragment {
     }
     private void getCategory(){
         RequestParams params = new RequestParams();
-        params.put("Gender", 2);
+        params.put("Gender", gender);
         HttpClient.post("android/getCategory.php", params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

@@ -142,7 +142,7 @@ public class FavoriteBrandListAdapter extends BaseAdapter {
                     notifyDataSetChanged();
                     // 통신
                     RequestParams params = new RequestParams();
-                    userID = FragmentActivity.userID;
+                    userID = FragmentActivity.userPkey;
                     params.put("UserPKey", userID);
                     params.put("BrandKey", selectedItem.getBrandKey());
 
