@@ -95,7 +95,7 @@ public class LoginActivity extends BaseActivity {
         backBtn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, SplashActivity.class);
+                Intent intent = new Intent(mContext, SignSelectionActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -123,7 +123,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
-        Intent intent = new Intent(mContext, SplashActivity.class);
+        Intent intent = new Intent(mContext, SignSelectionActivity.class);
         startActivity(intent);
         finish();
     }

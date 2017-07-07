@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 
 import net.heronattion.solowin.R;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
+import static java.lang.Integer.parseInt;
 import static net.heronattion.solowin.activity.SignupInformation2Activity.name;
 import static net.heronattion.solowin.activity.SignupInformation2Activity.strCategoryPkey;
 
@@ -44,6 +46,7 @@ public class SignupInformation3Activity extends BaseActivity {
 
     private String CategoryPKey;
     private String CategoryName;
+    private int userPkey;
 
     static public BaseActivity signupInfoActivity3;
 
@@ -59,6 +62,7 @@ public class SignupInformation3Activity extends BaseActivity {
     int necessaryPartID;
     String necessaryPartName;
     int jsonLength;
+    private  TextView skipSignup3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,11 @@ public class SignupInformation3Activity extends BaseActivity {
     @Override
     public void setValues() {
         super.setValues();
+        final PersistentCookieStore myCookieStore = new PersistentCookieStore(this);
+        for(int i=0; i < myCookieStore.getCookies().size(); i++) {
+            if(myCookieStore.getCookies().get(i).getName().equals("UserPKEY"))
+                userPkey = parseInt(myCookieStore.getCookies().get(i).getValue());
+        }
         savedCardDotList = new ArrayList<DotData>();
         autoCheckFlag = 0; // 클릭안한 상태
 
@@ -190,7 +199,7 @@ public class SignupInformation3Activity extends BaseActivity {
                     }
 
                     RequestParams params1 = new RequestParams();
-                    params1.put("UserPKey", "2087");
+                    params1.put("UserPKey", userPkey);
                     params1.put("CategoryID", strCategoryPkey);
                     params1.put("Name", name);
                     params1.put("SizetypeAndSize", necessarySizeTypeAndSize);
@@ -199,7 +208,16 @@ public class SignupInformation3Activity extends BaseActivity {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             String s = new String(responseBody);
-                            Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
+                            if(new String(responseBody).contains("success")){
+                                Toast.makeText(mContext, "성공적으로 저장되었습니다." , Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(mContext, FragmentActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }else{
+                                Toast.makeText(mContext, "저장도중 문제가 발생하였습니다." , Toast.LENGTH_SHORT).show();
+                            }
+
                         }
 
                         @Override
@@ -216,11 +234,20 @@ public class SignupInformation3Activity extends BaseActivity {
 
             }
         });
+        skipSignup3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, FragmentActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
     public void bindViews() {
         this.nextButton3 = (TextView) findViewById(R.id.nextButton3);
+        this.skipSignup3 = (TextView) findViewById(R.id.skipSignup3);
         this.sizeEdit = (EditText) findViewById(R.id.sizeEdit);
         this.addSize = (TextView) findViewById(R.id.addSize);
     }

@@ -1,6 +1,7 @@
 package net.heronattion.solowin.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -44,6 +45,8 @@ public class FourthFragment extends Fragment {
     private int categoryID;
     private int userID;
     private int gender;
+    private int manFlag;
+    private int womanFlag;
 
     public FourthFragment()
     {
@@ -99,6 +102,17 @@ public class FourthFragment extends Fragment {
         addMyClothe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(gender==1){
+                    manFlag=1;
+                    womanFlag=0;
+                }else if(gender==2){
+                    manFlag=0;
+                    womanFlag=1;
+                }else{
+                    manFlag=1;
+                    womanFlag=0;
+                }
+//                Intent intent = new Intent()
                 Log.d("addClothes","addClothes");
             }
         });

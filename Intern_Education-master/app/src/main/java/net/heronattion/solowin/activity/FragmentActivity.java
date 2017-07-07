@@ -171,30 +171,31 @@ public class FragmentActivity extends BaseActivity implements NavigationView.OnN
         *   movePageListener 에서 changeSearchBtn Flag 조절
         */
         searchBtn.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v){
-            getChangeSearchBtn = SecondFragment.changeSearchBtn;
-            Intent brandIntent = new Intent(FragmentActivity.this, SearchBrandActivity.class);
-            Intent productIntent = new Intent(FragmentActivity.this, SearchProductActivity.class);
-            switch (changeSearchBtn){
-                case 0:
-                    brandIntent.putExtra("Search_bar_title", "브랜드검색");
-                    startActivity(brandIntent);
-                    break;
-                case 1:
-                    productIntent.putExtra("Search_bar_title", "상품검색");
-                    startActivity(productIntent);
-                    break;
-                case 2:
-                    if(getChangeSearchBtn==0){
-                        brandIntent.putExtra("Search_bar_title", "브랜드검색");
-                        startActivity(brandIntent);
-                    }else{
-                        productIntent.putExtra("Search_bar_title", "상품검색");
-                        startActivity(productIntent);
-                    }
-                    break;
+            public void onClick(View v){
+                Toast.makeText(mContext, "서비스 준비 중입니다.", Toast.LENGTH_SHORT).show();
+//                getChangeSearchBtn = SecondFragment.changeSearchBtn;
+//                Intent brandIntent = new Intent(FragmentActivity.this, SearchBrandActivity.class);
+//                Intent productIntent = new Intent(FragmentActivity.this, SearchProductActivity.class);
+//                switch (changeSearchBtn){
+//                    case 0:
+//                        brandIntent.putExtra("Search_bar_title", "브랜드검색");
+//                        startActivity(brandIntent);
+//                        break;
+//                    case 1:
+//                        productIntent.putExtra("Search_bar_title", "상품검색");
+//                        startActivity(productIntent);
+//                        break;
+//                    case 2:
+//                        if(getChangeSearchBtn==0){
+//                            brandIntent.putExtra("Search_bar_title", "브랜드검색");
+//                            startActivity(brandIntent);
+//                        }else{
+//                            productIntent.putExtra("Search_bar_title", "상품검색");
+//                            startActivity(productIntent);
+//                        }
+//                        break;
+//                }
             }
-                }
         });
     }
     @Override
@@ -232,7 +233,7 @@ public class FragmentActivity extends BaseActivity implements NavigationView.OnN
                         //TODO : 통신에 성공했을 때 이벤트를 적어주면 됨
                         String response = new String(responseBody);
                         if(response.equals("logout")){
-                            Intent intent = new Intent(mContext, SplashActivity.class);
+                            Intent intent = new Intent(mContext, SignSelectionActivity.class);
                             startActivity(intent);
                             finish();
                         }else{

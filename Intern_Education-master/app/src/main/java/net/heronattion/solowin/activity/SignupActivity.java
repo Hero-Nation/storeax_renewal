@@ -88,7 +88,7 @@ public class SignupActivity extends BaseActivity{
         backButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, SplashActivity.class);
+                Intent intent = new Intent(mContext, SignSelectionActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -385,7 +385,7 @@ public class SignupActivity extends BaseActivity{
         cancelButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, SplashActivity.class);
+                Intent intent = new Intent(mContext, SignSelectionActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -395,7 +395,7 @@ public class SignupActivity extends BaseActivity{
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(mContext, SplashActivity.class);
+        Intent intent = new Intent(mContext, SignSelectionActivity.class);
         startActivity(intent);
         finish();
     }

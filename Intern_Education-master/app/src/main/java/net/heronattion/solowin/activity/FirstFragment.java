@@ -81,7 +81,7 @@ public class FirstFragment extends Fragment {
                 intent.putExtra("logo", item.getLogo());
 //                intent.putExtra("favorite", item.getFavorite());
                 startActivity(intent);
-                getActivity().finish();
+//                getActivity().finish();
             }
         });
     }
