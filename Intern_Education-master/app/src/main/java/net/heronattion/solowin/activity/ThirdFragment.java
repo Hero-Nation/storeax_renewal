@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import cz.msebera.android.httpclient.Header;
 
 import static com.loopj.android.http.AsyncHttpClient.log;
 import static java.lang.Integer.parseInt;
+import static net.heronattion.solowin.activity.FragmentActivity.mContext;
 
 /**
  * Created by heronation on 2017-06-08.
@@ -34,7 +36,7 @@ import static java.lang.Integer.parseInt;
 
 public class ThirdFragment extends Fragment {
 
-
+    private Button changeStyleBtn;
     RecyclerView recyclerView;
     List<BrandProductItem> listViewItems;
 //    ArrayList<BrandProductItem> listViewItems;
@@ -64,8 +66,8 @@ public class ThirdFragment extends Fragment {
     {
         detailLayout = (LinearLayout) inflater.inflate(R.layout.product_detail, container, false);
         layout = (LinearLayout) inflater.inflate(R.layout.fragment_third, container, false);
-        setValues();
         bindViews();
+        setValues();
         setupEvents();
         getWishList();
 
@@ -171,31 +173,23 @@ public class ThirdFragment extends Fragment {
                 Log.e("scroll",""+scrollFlag);
 
                 if (pastVisibleItems==totalItemCount-1) {
-                    Toast.makeText(FragmentActivity.mContext, "test", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "test", Toast.LENGTH_SHORT).show();
                     scrollFlag ++;
                     setProductItem();
                 }
             }
         });
-//        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener(){
-//            @Override
-//            public void onItemClick(View view, int position) {
-//                Context context = getContext();
-//                String url = parseDataList[position][5];
-//                Log.e("POSITION", url);
-//                Intent intent = new Intent(context, LoadDetailActivity.class);
-//                intent.putExtra("URL", url);
-//                startActivity(intent);
-//            }
-//            @Override
-//            public void onLongItemClick(View view, int position) {
-//            }
-//        }));
+        changeStyleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "서비스 준비 중입니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setValues() {
         scrollFlag = 0;
-        userID = FragmentActivity.userID;
+        userID = FragmentActivity.userPkey;
         isWish = false;
     }
 
@@ -206,5 +200,6 @@ public class ThirdFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(gaggeredGridLayoutManager);
         rcAdapter = new MyRecyclerViewAdapter(getContext(), listViewItems);
+        changeStyleBtn = (Button) layout.findViewById(R.id.changeStyleBtn);
     }
 }

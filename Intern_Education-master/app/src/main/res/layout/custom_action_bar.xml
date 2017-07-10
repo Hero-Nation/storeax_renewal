@@ -14,28 +14,39 @@
 
         <ImageView
             android:id="@+id/backButton"
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_weight="1"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"/>
-
-        <TextView
-            android:id="@+id/title"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:layout_weight="20"
-            android:gravity="center"
-
-            android:textSize="15dp"
-            android:textColor="#FFFFFF"
-            android:text="로그인"
-            />
+            android:layout_gravity="center">
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:textColor="#FFFFFF"
+                android:text="로그인"
+                />
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:src="@mipmap/logo"
+                android:visibility="gone"/>
+        </FrameLayout>
 
         <ImageView
             android:id="@+id/searchBtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:layout_marginRight="10dp"/>

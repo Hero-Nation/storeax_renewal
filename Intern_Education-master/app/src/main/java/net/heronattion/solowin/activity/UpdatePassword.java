@@ -1,9 +1,11 @@
 package net.heronattion.solowin.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,19 +39,21 @@ public class UpdatePassword extends BaseActivity {
     private android.widget.LinearLayout updateOriginalPasswordLayout;
 
     @Override
+    public void setCustomActionBar() {
+        super.setCustomActionBar();
+        titleTxt.setVisibility(View.INVISIBLE);
+        logo.setVisibility(View.VISIBLE);
+        backBtn.setImageResource(R.drawable.backbutton);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_password);
 
-
         bindViews();
-        setupEvents();
-
-
-        // 연희씨 커스텀바 사용해야함
         setCustomActionBar();
-        TextView title = (TextView) findViewById(R.id.title);
-        title.setText("여니씨커스텀바");
+        setupEvents();
     }
 
     @Override
@@ -100,11 +104,7 @@ public class UpdatePassword extends BaseActivity {
                 }
                 else {
                     updatePasswordButtonEvent();
-//                    Intent intent = new Intent(mContext, SignupInformationActivity.class);
-//                    startActivity(intent);
-//                    finish();
                 }
-
             }
         });
 
@@ -112,6 +112,15 @@ public class UpdatePassword extends BaseActivity {
             @Override
             public void onClick(View v) {
                 withdraw();
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, FragmentActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -166,6 +175,9 @@ public class UpdatePassword extends BaseActivity {
                 switch(response) {
                     case "success":
                         Toast.makeText(UpdatePassword.this, "비밀번호가 수정되었습니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(mContext, FragmentActivity.class);
+                        startActivity(intent);
+                        finish();
                         break;
                     case "originalPassword" : // 암호가 다름
                         Toast.makeText(UpdatePassword.this, "기존 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
@@ -187,8 +199,6 @@ public class UpdatePassword extends BaseActivity {
     }
 
     private void withdraw() {
-
+        Toast.makeText(mContext, "서비스 준비 중입니다.", Toast.LENGTH_SHORT).show();
     }
-
-
 }

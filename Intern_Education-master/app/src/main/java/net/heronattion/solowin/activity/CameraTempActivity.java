@@ -9,8 +9,8 @@ import android.widget.Button;
 
 import net.heronattion.solowin.R;
 
-import static net.heronattion.solowin.activity.SignupInformation2Activity.name;
-import static net.heronattion.solowin.activity.SignupInformation2Activity.strCategoryPkey;
+//import static net.heronattion.solowin.activity.SignupInformation2Activity.name;
+//import static net.heronattion.solowin.activity.SignupInformation2Activity.strCategoryPkey;
 
 public class CameraTempActivity extends BaseActivity {
 
@@ -28,8 +28,8 @@ public class CameraTempActivity extends BaseActivity {
 
                 SignupInformation3Activity.signupInfoActivity3.finish();
                 Intent intent = new Intent(mContext, SignupInformation3Activity.class);
-                intent.putExtra("PKey", strCategoryPkey);
-                intent.putExtra("Name", name);
+//                intent.putExtra("PKey", strCategoryPkey);
+//                intent.putExtra("Name", name);
                 startActivity(intent);
                 finish();
             }

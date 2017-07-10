@@ -106,8 +106,8 @@
                                     android:layout_height="match_parent"
                                     android:layout_gravity="left"
                                     android:layout_weight="0.2"
-                                    android:src="@drawable/check_grey"
-                                    android:visibility="invisible"/>
+                                    android:visibility="invisible"
+                                    android:src="@drawable/check_grey" />
 
                                 <View
                                     android:layout_width="0dp"
@@ -142,8 +142,8 @@
                                     android:layout_height="match_parent"
                                     android:layout_gravity="left"
                                     android:layout_weight="0.2"
-                                    android:src="@drawable/check_grey"
-                                    android:visibility="invisible"/>
+                                    android:visibility="invisible"
+                                    android:src="@drawable/check_grey" />
 
                                 <View
                                     android:layout_width="0dp"
@@ -178,8 +178,8 @@
                                     android:layout_height="match_parent"
                                     android:layout_gravity="left"
                                     android:layout_weight="0.2"
-                                    android:src="@drawable/check_grey"
-                                    android:visibility="invisible"/>
+                                    android:visibility="invisible"
+                                    android:src="@drawable/check_grey" />
 
                                 <View
                                     android:layout_width="0dp"
@@ -214,8 +214,8 @@
                                     android:layout_height="match_parent"
                                     android:layout_gravity="left"
                                     android:layout_weight="0.2"
-                                    android:src="@drawable/check_grey"
-                                    android:visibility="invisible"/>
+                                    android:visibility="invisible"
+                                    android:src="@drawable/check_grey" />
 
                                 <View
                                     android:layout_width="0dp"
@@ -259,8 +259,8 @@
                                     android:layout_height="match_parent"
                                     android:layout_gravity="left"
                                     android:layout_weight="0.2"
-                                    android:src="@drawable/check_grey"
-                                    android:visibility="invisible"/>
+                                    android:visibility="invisible"
+                                    android:src="@drawable/check_grey" />
 
                                 <View
                                     android:layout_width="0dp"
@@ -322,7 +322,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="10dp"
-                android:layout_weight="0.3">
+                android:layout_weight="0.5">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -365,35 +365,11 @@
                     android:text="측정결과입니다."
                     android:textColor="#00FF00" />
             </LinearLayout>
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.3"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.5"
-                    android:gravity="center"
-                    android:text="이제 촬영없이 빠른 측정이 가능합니다." />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.5"
-                    android:gravity="center"
-                    android:text="다음은 가슴을 측정합니다. " />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.3">
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.5">
 
                 <TextView
                     android:id="@+id/skipBtn"

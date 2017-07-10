@@ -14,10 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 
 import net.heronattion.solowin.R;
 import net.heronattion.solowin.camera.Data.DotData;
+import net.heronattion.solowin.data.SizeTypeIDAndFlagData;
 import net.heronattion.solowin.network.HttpClient;
 
 import org.json.JSONArray;
@@ -28,8 +30,9 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-import static net.heronattion.solowin.activity.SignupInformation2Activity.name;
-import static net.heronattion.solowin.activity.SignupInformation2Activity.strCategoryPkey;
+import static java.lang.Integer.parseInt;
+import static net.heronattion.solowin.activity.SignupInformation2Activity.myClosetData;
+
 
 /**
  * Created by hero on 2017-06-08.
@@ -41,8 +44,9 @@ public class SignupInformation3Activity extends BaseActivity {
     public static android.widget.EditText sizeEdit;
     private TextView nextButton3;
 
-    private String CategoryPKey;
-    private String CategoryName;
+//    private String CategoryPKey;
+//    private String CategoryName;
+    private int userPkey;
 
     static public BaseActivity signupInfoActivity3;
 
@@ -58,20 +62,19 @@ public class SignupInformation3Activity extends BaseActivity {
     int necessaryPartID;
     String necessaryPartName;
     int jsonLength;
-    private TextView skipSignup3;
+    private  TextView skipSignup3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signupinformation3);
-
         signupInfoActivity3 = this;
         setCustomActionBar();
         TextView title = (TextView) findViewById(R.id.title);
         title.setText("추가정보 입력");
 
-        CategoryPKey = getIntent().getExtras().getString("PKey");
-        CategoryName = getIntent().getExtras().getString("Name");
+//        CategoryPKey = getIntent().getExtras().getString("PKey");
+//        CategoryName = getIntent().getExtras().getString("Name");
 
         bindViews();
         setValues();
@@ -82,11 +85,16 @@ public class SignupInformation3Activity extends BaseActivity {
     @Override
     public void setValues() {
         super.setValues();
+        final PersistentCookieStore myCookieStore = new PersistentCookieStore(this);
+        for(int i=0; i < myCookieStore.getCookies().size(); i++) {
+            if(myCookieStore.getCookies().get(i).getName().equals("UserPKEY"))
+                userPkey = parseInt(myCookieStore.getCookies().get(i).getValue());
+        }
         savedCardDotList = new ArrayList<DotData>();
         autoCheckFlag = 0; // 클릭안한 상태
 
         params = new RequestParams();
-        params.put("SizeTypeID", strCategoryPkey);
+        params.put("CategoryID", myClosetData.getStrCategoryPkey());
     }
 
     @Override
@@ -166,8 +174,8 @@ public class SignupInformation3Activity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CameraMeasureActivity.class);
-                intent.putExtra("CategoryPKey", CategoryPKey);
-                intent.putExtra("CategoryName", CategoryName);
+//                intent.putExtra("CategoryPKey", CategoryPKey);
+//                intent.putExtra("CategoryName", CategoryName);
                 startActivity(intent);
             }
         });
@@ -191,9 +199,9 @@ public class SignupInformation3Activity extends BaseActivity {
                     }
 
                     RequestParams params1 = new RequestParams();
-                    params1.put("UserPKey", "2087");
-                    params1.put("CategoryID", strCategoryPkey);
-                    params1.put("Name", name);
+                    params1.put("UserPKey", userPkey);
+                    params1.put("CategoryID", myClosetData.getStrCategoryPkey());
+                    params1.put("Name", myClosetData.getName());
                     params1.put("SizetypeAndSize", necessarySizeTypeAndSize);
 
                     HttpClient.post("/sizeax/CHS/php/insertusersize.php", params1, new AsyncHttpResponseHandler() {
@@ -209,8 +217,6 @@ public class SignupInformation3Activity extends BaseActivity {
                             }else{
                                 Toast.makeText(mContext, "저장도중 문제가 발생하였습니다." , Toast.LENGTH_SHORT).show();
                             }
-
-
 
                         }
 
@@ -228,7 +234,6 @@ public class SignupInformation3Activity extends BaseActivity {
 
             }
         });
-
         skipSignup3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,8 +248,8 @@ public class SignupInformation3Activity extends BaseActivity {
     public void bindViews() {
         this.nextButton3 = (TextView) findViewById(R.id.nextButton3);
         this.skipSignup3 = (TextView) findViewById(R.id.skipSignup3);
-        this.addSize = (TextView) findViewById(R.id.addSize);
         this.sizeEdit = (EditText) findViewById(R.id.sizeEdit);
+        this.addSize = (TextView) findViewById(R.id.addSize);
     }
 
 

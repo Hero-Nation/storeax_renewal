@@ -20,6 +20,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import net.heronattion.solowin.R;
+import net.heronattion.solowin.data.ClosetAddInfoData;
 import net.heronattion.solowin.network.HttpClient;
 import net.heronattion.solowin.util.ParseData;
 
@@ -45,8 +46,9 @@ public class SignupInformation2Activity extends BaseActivity {
     //파싱된 데이터를 활용하여 버튼 동적할당
     private CheckBox[] chCategoryArray;
 
-    static public String strCategoryPkey;
-    static public String name;
+//    static public String strCategoryPkey;
+//    static public String name;
+    static public ClosetAddInfoData myClosetData;
 
     private int categoryCount = 0;
     private int categoryFlag = 0;
@@ -70,6 +72,8 @@ public class SignupInformation2Activity extends BaseActivity {
         womanFlag = getIntent().getIntExtra("womanFlag", 0);
         sCategoryList = new String[]{};
 
+        myClosetData = new ClosetAddInfoData();
+
         bindViews();
         setupEvents();
     }
@@ -92,12 +96,12 @@ public class SignupInformation2Activity extends BaseActivity {
                 } else {
 
                     Intent intent = new Intent(mContext, SignupInformation3Activity.class);
-                    name = textView2.getText().toString();
-                    intent.putExtra("PKey", strCategoryPkey);
-                    intent.putExtra("Name", name);
+                    myClosetData.setName(textView2.getText().toString());
+//                    intent.putExtra("PKey", strCategoryPkey);
+//                    intent.putExtra("Name", name);
 
-                    Log.i("Category Pkey: ", strCategoryPkey);
-                    Log.i("textView : ", textView2.getText().toString());
+                    Log.i("Category Pkey: ", myClosetData.getStrCategoryPkey());
+                    Log.i("textView : ", myClosetData.getName());
                     startActivity(intent);
                     finish();
                 }
@@ -115,7 +119,7 @@ public class SignupInformation2Activity extends BaseActivity {
         this.textView2 = (EditText) findViewById(R.id.textView2);
         this.scCategory = (ScrollView) findViewById(R.id.scCategory);
         this.linCategory = (LinearLayout) findViewById(R.id.linCategory);
-   }
+    }
 
     private void parsingOptions() {
 
@@ -141,7 +145,6 @@ public class SignupInformation2Activity extends BaseActivity {
 
                 /*
                 파싱 완료.
-
                 스 타 일 요소 : Pkey, Name, isSelect
                 브 랜 드 요소 : Pkey, Name, isSelect
                 컬    러 요소 : Pkey, RGBCode, isSelect
@@ -195,8 +198,8 @@ public class SignupInformation2Activity extends BaseActivity {
 
         for (i = 0; i < checkBoxes.length; i++) {
             checkBoxes[i] = new CheckBox(this);
-            manFlag = 0;
-            womanFlag = 1;
+//            manFlag = 0;
+//            womanFlag = 1;
             if (manFlag == 1 && itemArray[i][2].toString().equals("1")) {
                 categoryFlag = 1;
                 categoryCount++;
@@ -231,7 +234,8 @@ public class SignupInformation2Activity extends BaseActivity {
                             buttonView.setTag(1);
                             buttonView.setBackgroundResource(R.drawable.signup_border_check);
                             buttonView.setTextColor(Color.parseColor("#7623D7"));
-                            strCategoryPkey = buttonView.getId() + "";
+                            myClosetData.setStrCategoryPkey(buttonView.getId() + "");
+
                         } else {
                             buttonView.setTag(0);
                             buttonView.setBackgroundResource(R.drawable.signup_border);
@@ -260,7 +264,7 @@ public class SignupInformation2Activity extends BaseActivity {
                 checkBoxes[i].setGravity(Gravity.CENTER);
                 checkBoxes[i].setLayoutParams(param);
                 checkBoxes[i].setTextColor(Color.parseColor("#999999"));
-                checkBoxes[i].setHeight(120);
+//                checkBoxes[i].setHeight(120);
                 checkBoxes[i].setTag(0);
 
                 checkBoxes[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -276,7 +280,7 @@ public class SignupInformation2Activity extends BaseActivity {
                             buttonView.setTag(1);
                             buttonView.setBackgroundResource(R.drawable.signup_border_check);
                             buttonView.setTextColor(Color.parseColor("#7623D7"));
-                            strCategoryPkey = buttonView.getId() + "";
+                            myClosetData.setStrCategoryPkey(buttonView.getId() + "");
                         } else {
                             buttonView.setTag(0);
                             buttonView.setBackgroundResource(R.drawable.signup_border);
@@ -349,8 +353,8 @@ public class SignupInformation2Activity extends BaseActivity {
     }
 
     private void setFilter() {
-        if (!strCategoryPkey.equals("")) {
-            selCategoryPkey = strCategoryPkey.split("/");
+        if (!myClosetData.getStrCategoryPkey().equals("")) {
+            selCategoryPkey = myClosetData.getStrCategoryPkey().split("/");
             sCategoryList = selCategoryPkey;
         }
     }

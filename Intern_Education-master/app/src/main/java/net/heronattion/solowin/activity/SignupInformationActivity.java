@@ -67,10 +67,10 @@ public class SignupInformationActivity extends BaseActivity {
 
 
 
-//        manFlag = getIntent().getIntExtra("manFlag", 0);
-//        womanFlag = getIntent().getIntExtra("womanFlag", 0);
-        manFlag = 1;
-        womanFlag = 0;
+        manFlag = getIntent().getIntExtra("manFlag", 0);
+        womanFlag = getIntent().getIntExtra("womanFlag", 0);
+//        manFlag = 1;
+//        womanFlag = 0;
 
         strStylePkey = "";
         selStylePkey = new String[]{};

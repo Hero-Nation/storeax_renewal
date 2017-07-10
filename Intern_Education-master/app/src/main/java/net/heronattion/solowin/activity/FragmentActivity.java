@@ -10,9 +10,9 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,10 +23,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.PersistentCookieStore;
+import com.loopj.android.http.RequestParams;
 
 import net.heronattion.solowin.R;
 import net.heronattion.solowin.network.HttpClient;
+
+import org.w3c.dom.Text;
+
+import cz.msebera.android.httpclient.Header;
 
 import static java.lang.Integer.parseInt;
 
@@ -38,6 +44,18 @@ public class FragmentActivity extends BaseActivity implements NavigationView.OnN
     private pagerAdapter vpAdapter;
     private ViewPager vp;
 
+    private NavigationView navigationView;
+    private TextView navigationUserID;
+    private TextView navigationLogout;
+    private TextView signUpButton;
+    private TextView myPageButton;
+    private TextView mySizeButton;
+    private TextView myStyleButton;
+    private TextView contactButton;
+    private TextView termButton;
+    private TextView inquiryButton;
+
+
     private LinearLayout ll;
     ActionBarDrawerToggle drawerToggle;
     private RelativeLayout drawerView;
@@ -48,49 +66,27 @@ public class FragmentActivity extends BaseActivity implements NavigationView.OnN
     private int changeSearchBtn = 0;
     private int getChangeSearchBtn;
 
-    public static int userID;
+    public static int userPkey;
+    private String userID;
+    private String[] parseUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
-        final PersistentCookieStore myCookieStore = new PersistentCookieStore(this);
-        for(int i=0; i < myCookieStore.getCookies().size(); i++) {
-            if(myCookieStore.getCookies().get(i).getName().equals("UserPKEY"))
-                userID = parseInt(myCookieStore.getCookies().get(i).getValue());
-        }
-//        Intent intent = getIntent();
-//        userID = parseInt(intent.getStringExtra("UserPKey"));
-//        userID = 1988;
-        /*
-        *    CustomActionBar
-        *    res - layout - main_actio_bar. xml
-        */
+
 
         setFragmentActionBar();
         mainActivity = this;
         mContext = this;
-//        drawerView = (RelativeLayout) findViewById(R.id.drawer);
-        dlDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        searchBtn = (ImageView) findViewById(R.id.searchBtn);
-
-        vp = (ViewPager)findViewById(R.id.vp);
-        ll = (LinearLayout)findViewById(R.id.ll);
+        bindViews();
+        setValues();
+        setupEvents();
 
         LinearLayout tab_first = (LinearLayout) findViewById(R.id.page1Btn);
         LinearLayout tab_second = (LinearLayout) findViewById(R.id.page2Btn);
         LinearLayout tab_third = (LinearLayout) findViewById(R.id.page3Btn);
         LinearLayout tab_fourth = (LinearLayout) findViewById(R.id.page4Btn);
-
-        TextView menuSignUP = (TextView)findViewById(R.id.menuSignUP);
-
-        menuSignUP.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(FragmentActivity.this, "회원가입", Toast.LENGTH_SHORT).show();
-                dlDrawer.closeDrawer(GravityCompat.START);
-            }
-        });
 
         /*
         *   메뉴 버튼 drawer toggle
@@ -99,7 +95,6 @@ public class FragmentActivity extends BaseActivity implements NavigationView.OnN
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-//                drawerView.bringToFront();
             }
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -107,12 +102,7 @@ public class FragmentActivity extends BaseActivity implements NavigationView.OnN
             }
         };
         dlDrawer.setDrawerListener(drawerToggle);
-
-        NavigationView navigationView = (NavigationView)findViewById(R.id.design_navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-//        drawerToggle.syncState();
-
         /*
         *   Viewpase Adapter 설정
         */
@@ -181,33 +171,149 @@ public class FragmentActivity extends BaseActivity implements NavigationView.OnN
         *   movePageListener 에서 changeSearchBtn Flag 조절
         */
         searchBtn.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v){
-                    getChangeSearchBtn = SecondFragment.changeSearchBtn;
-                    Intent brandIntent = new Intent(FragmentActivity.this, SearchBrandActivity.class);
-                    Intent productIntent = new Intent(FragmentActivity.this, SearchProductActivity.class);
-                    switch (changeSearchBtn){
-                        case 0:
-                            brandIntent.putExtra("Search_bar_title", "브랜드검색");
-                            startActivity(brandIntent);
-                            break;
-                        case 1:
-                            productIntent.putExtra("Search_bar_title", "상품검색");
-                            startActivity(productIntent);
-                            break;
-                        case 2:
-                            if(getChangeSearchBtn==0){
-                                brandIntent.putExtra("Search_bar_title", "브랜드검색");
-                                startActivity(brandIntent);
-                            }else{
-                                productIntent.putExtra("Search_bar_title", "상품검색");
-                                startActivity(productIntent);
-                            }
-                            break;
-                    }
-                }
+            public void onClick(View v){
+                Toast.makeText(mContext, "서비스 준비 중입니다.", Toast.LENGTH_SHORT).show();
+//                getChangeSearchBtn = SecondFragment.changeSearchBtn;
+//                Intent brandIntent = new Intent(FragmentActivity.this, SearchBrandActivity.class);
+//                Intent productIntent = new Intent(FragmentActivity.this, SearchProductActivity.class);
+//                switch (changeSearchBtn){
+//                    case 0:
+//                        brandIntent.putExtra("Search_bar_title", "브랜드검색");
+//                        startActivity(brandIntent);
+//                        break;
+//                    case 1:
+//                        productIntent.putExtra("Search_bar_title", "상품검색");
+//                        startActivity(productIntent);
+//                        break;
+//                    case 2:
+//                        if(getChangeSearchBtn==0){
+//                            brandIntent.putExtra("Search_bar_title", "브랜드검색");
+//                            startActivity(brandIntent);
+//                        }else{
+//                            productIntent.putExtra("Search_bar_title", "상품검색");
+//                            startActivity(productIntent);
+//                        }
+//                        break;
+//                }
+            }
         });
-
     }
+    @Override
+    public void bindViews() {
+        drawerView = (RelativeLayout) findViewById(R.id.drawer);
+        dlDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        searchBtn = (ImageView) findViewById(R.id.searchBtn);
+        vp = (ViewPager)findViewById(R.id.vp);
+        ll = (LinearLayout)findViewById(R.id.ll);
+
+        navigationView = (NavigationView) findViewById(R.id.design_navigation_view);
+        navigationUserID = (TextView) findViewById(R.id.navigationUserID);
+        navigationLogout = (TextView) findViewById(R.id.navigationLogout);
+        signUpButton = (TextView) findViewById(R.id.signUpButton);
+        myPageButton = (TextView) findViewById(R.id.myPageButton);
+        mySizeButton = (TextView) findViewById(R.id.mySizeButton);
+        myStyleButton = (TextView) findViewById(R.id.myStyleButton);
+        contactButton = (TextView) findViewById(R.id.contactButton);
+        termButton = (TextView) findViewById(R.id.termButton);
+        inquiryButton = (TextView) findViewById(R.id.inquiryButton);
+    }
+
+    @Override
+    public void setupEvents() {
+        navigationLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RequestParams params = new RequestParams();
+
+                //HttpClient 클래스에 기본 URL이 정해져 있음 http://heronation.net/ 이하의 경로를 적어주면 됨
+                HttpClient.post("android/logout.php", params, new AsyncHttpResponseHandler() {
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        //TODO : 통신에 성공했을 때 이벤트를 적어주면 됨
+                        String response = new String(responseBody);
+                        if(response.equals("logout")){
+                            Intent intent = new Intent(mContext, SignSelectionActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else{
+                            Log.d("Response", "서버통신에러");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        //TODO : 통신에 실패했을 때 이벤트를 적어주면 됨
+                        //서버와의 통신이 원할하지 않습니다.
+
+                        Toast.makeText(mContext, "서버와 통신이 원활하지 않습니다.", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
+        });
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "서비스 준비 중입니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        myPageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, UpdatePassword.class);
+                startActivity(intent);
+                finish();
+//                Toast.makeText(mContext, "서비스 준비 중입니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mySizeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "서비스 준비 중입니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        myStyleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "서비스 준비 중입니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        contactButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "서비스 준비 중입니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        termButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "서비스 준비 중입니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        inquiryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "서비스 준비 중입니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void setValues() {
+        final PersistentCookieStore myCookieStore = new PersistentCookieStore(this);
+        for(int i=0; i < myCookieStore.getCookies().size(); i++) {
+            if(myCookieStore.getCookies().get(i).getName().equals("UserPKEY"))
+                userPkey = parseInt(myCookieStore.getCookies().get(i).getValue());
+            else if(myCookieStore.getCookies().get(i).getName().equals("UserID"))
+                userID = myCookieStore.getCookies().get(i).getValue();
+        }
+        userID = userID.replace("%40", "@");
+        parseUserID = userID.split("[@]");
+        Log.d("UserID", parseUserID[0]);
+        navigationUserID.setText(parseUserID[0]);
+    }
+
 
     // 프래그먼트간 페이지 이동
     View.OnClickListener movePageListener = new View.OnClickListener()
@@ -258,8 +364,6 @@ public class FragmentActivity extends BaseActivity implements NavigationView.OnN
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-//
         return true;
     }
 
@@ -289,36 +393,6 @@ public class FragmentActivity extends BaseActivity implements NavigationView.OnN
                     return null;
             }
         }
-
-
-//        @Override
-//        public Object instantiateItem(View container, int position) {
-//            View root = ll;
-//            ((ViewPager) container).addView(root);
-//            views.put(position, root);
-//            return root;
-//        }
-//
-//        @Override
-//        public void destroyItem(View collection, int position, Object o) {
-//            View view = (View)o;
-//            ((ViewPager) collection).removeView(view);
-//            views.remove(position);
-//            view = null;
-//        }
-//
-//        @Override
-//        public void notifyDataSetChanged() {
-//            int key = 0;
-//            for(int i = 0; i < views.size(); i++) {
-//                key = views.keyAt(i);
-//                View view = views.get(key);
-//
-//
-//            }
-//            super.notifyDataSetChanged();
-//        }
-
         // 총 프래그먼트 수
         @Override
         public int getCount()

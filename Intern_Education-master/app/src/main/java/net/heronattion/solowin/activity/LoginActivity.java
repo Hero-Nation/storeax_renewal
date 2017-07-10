@@ -22,7 +22,7 @@ public class LoginActivity extends BaseActivity {
 
     private TextView findButton;
     private Button loginButton;
-    private ImageView backButton;
+//    private ImageView backButton;
     private android.widget.EditText loginID;
     private android.widget.EditText loginPW;
 
@@ -38,10 +38,17 @@ public class LoginActivity extends BaseActivity {
 
         bindViews();
         setCustomActionBar();
-        backButton = (ImageView) findViewById(R.id.backButton);
-        backButton.setImageResource(R.drawable.backbutton);
+
 
         setupEvents();
+    }
+
+    @Override
+    public void setCustomActionBar() {
+        super.setCustomActionBar();
+        titleTxt.setVisibility(View.VISIBLE);
+        logo.setVisibility(View.INVISIBLE);
+        backBtn.setImageResource(R.drawable.backbutton);
     }
 
     @Override
@@ -85,10 +92,10 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-        backButton.setOnClickListener(new Button.OnClickListener() {
+        backBtn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, SplashActivity.class);
+                Intent intent = new Intent(mContext, SignSelectionActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -111,6 +118,14 @@ public class LoginActivity extends BaseActivity {
         this.findButton = (TextView) findViewById(R.id.findButton);
         this.loginButton = (Button) findViewById(R.id.loginButton);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        Intent intent = new Intent(mContext, SignSelectionActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void loginButtonEvent() {

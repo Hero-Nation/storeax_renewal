@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 
 import net.heronattion.solowin.R;
@@ -30,8 +31,9 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-import static net.heronattion.solowin.activity.SignupInformation2Activity.name;
-import static net.heronattion.solowin.activity.SignupInformation2Activity.strCategoryPkey;
+
+import static java.lang.Integer.parseInt;
+import static net.heronattion.solowin.activity.SignupInformation2Activity.myClosetData;
 import static net.heronattion.solowin.activity.SignupInformation3Activity.autoCheckFlag;
 import static net.heronattion.solowin.activity.SignupInformation3Activity.sizeEdit;
 
@@ -80,6 +82,8 @@ public class CameraMeasureActivity extends BaseActivity {
     int[] maximum_restrict;
     String[] sizeTypeNameArr;
 
+    int userPkey;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,7 +123,7 @@ public class CameraMeasureActivity extends BaseActivity {
         };
 
         params = new RequestParams();
-        params.add("SizeTypeID", strCategoryPkey); // 지금은 static 변수로 받고 있지만, 추후 클래스로 바꿔보자
+        params.add("CategoryID", myClosetData.getStrCategoryPkey()); // 지금은 static 변수로 받고 있지만, 추후 클래스로 바꿔보자
 
         if (sizeEdit.getText().toString().length() != 0) {
             detailSizeET.setText(sizeEdit.getText().toString());
@@ -130,6 +134,12 @@ public class CameraMeasureActivity extends BaseActivity {
         maximum_restrict = new int[]{150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150};
         sizeTypeNameArr =
                 new String[]{"어깨", "가슴", "소매", "상의총기장", "원피스총기장", "소매통", "허리", "허벅지", "밑위", "밑단", "하의총기장", "힙", "발길이", "발볼", "굽"};
+
+        final PersistentCookieStore myCookieStore = new PersistentCookieStore(this);
+        for(int i=0; i < myCookieStore.getCookies().size(); i++) {
+            if(myCookieStore.getCookies().get(i).getName().equals("UserPKEY"))
+                userPkey = parseInt(myCookieStore.getCookies().get(i).getValue());
+            }
 
     }
 
@@ -366,10 +376,11 @@ public class CameraMeasureActivity extends BaseActivity {
                 }
 
                 RequestParams params = new RequestParams();
-                params.put("UserPKey", "2087");
-                params.put("CategoryID", strCategoryPkey);
+//                params.put("UserPKey", "2087");
+                params.put("UserPKey",userPkey);
+                params.put("CategoryID", myClosetData.getStrCategoryPkey());
 //                params.put("Name",name);
-                params.put("Name", name);
+                params.put("Name", myClosetData.getName());
                 params.put("SizetypeAndSize", sizeTypeAndSize);
                 Log.i("totalFlag", totalFlag + "");
                 if (totalFlag) {

@@ -93,13 +93,22 @@ public class DetailBrandActivity extends BaseActivity {
 //        setClickedItem();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), FragmentActivity.class);
+        getWindow().setWindowAnimations(android.R.style.Animation_Toast);
+        finish();
+        startActivity(intent);
+        overridePendingTransition(0,0);
+    }
+
     public void setValues() {
         super.setValues();
 
         adapter = new BrandListAdapter(getApplicationContext());
 
         Intent intent = getIntent();
-        userID = FragmentActivity.userID;
+        userID = FragmentActivity.userPkey;
         mbrandKey = intent.getStringExtra("brandKey");
         mTitle = intent.getStringExtra("name");
         mLogo = intent.getStringExtra("logo");
@@ -121,33 +130,15 @@ public class DetailBrandActivity extends BaseActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent2 = new Intent(getApplicationContext(), FragmentActivity.class);
-                Intent intent = getIntent();
-//                intent.putExtra("favorite", mFavorite);
-                getWindow().setWindowAnimations(android.R.style.Animation_Toast);
-                finish();
-                // 화면전환 효과 없애기
-                startActivity(intent2);
-                overridePendingTransition(0,0);
+            Intent intent = new Intent(getApplicationContext(), FragmentActivity.class);
+            getWindow().setWindowAnimations(android.R.style.Animation_Toast);
+            finish();
+            startActivity(intent);
+            overridePendingTransition(0,0);
             }
         });
     }
-    public void setClickedItem(){
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener(){
-            @Override
-            public void onItemClick(View view, int position) {
-                Context context = getApplicationContext();
-                String url = parseDataList[position][5];
-                Log.e("POSITION", url);
-                Intent intent = new Intent(context, LoadDetailActivity.class);
-                intent.putExtra("URL", url);
-                startActivity(intent);
-            }
-            @Override
-            public void onLongItemClick(View view, int position) {
-            }
-        }));
-    }
+
 
     // Clicked Dialog
     public void setClickedDialog() {
