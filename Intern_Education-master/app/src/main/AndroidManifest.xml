@@ -65,10 +65,6 @@
         <activity android:name=".camera.Show2Activity" />
         <activity android:name=".activity.CameraCautionActivity" />
         <activity android:name=".activity.CameraInfoActivity" />
-        <activity
-            android:name=".activity.CameraTempActivity"
-            android:label="@string/title_activity_camera_temp"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.SignSelectionActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>

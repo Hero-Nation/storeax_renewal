@@ -31,8 +31,8 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
 import static java.lang.Integer.parseInt;
-import static net.heronattion.solowin.activity.SignupInformation2Activity.name;
-import static net.heronattion.solowin.activity.SignupInformation2Activity.strCategoryPkey;
+import static net.heronattion.solowin.activity.SignupInformation2Activity.myClosetData;
+
 
 /**
  * Created by hero on 2017-06-08.
@@ -44,8 +44,6 @@ public class SignupInformation3Activity extends BaseActivity {
     public static android.widget.EditText sizeEdit;
     private TextView nextButton3;
 
-    private String CategoryPKey;
-    private String CategoryName;
     private int userPkey;
 
     static public BaseActivity signupInfoActivity3;
@@ -73,14 +71,14 @@ public class SignupInformation3Activity extends BaseActivity {
         TextView title = (TextView) findViewById(R.id.title);
         title.setText("추가정보 입력");
 
-        CategoryPKey = getIntent().getExtras().getString("PKey");
-        CategoryName = getIntent().getExtras().getString("Name");
-
         bindViews();
         setValues();
         setupEvents();
 
     }
+
+    @Override
+    public void onBackPressed() {}
 
     @Override
     public void setValues() {
@@ -94,7 +92,7 @@ public class SignupInformation3Activity extends BaseActivity {
         autoCheckFlag = 0; // 클릭안한 상태
 
         params = new RequestParams();
-        params.put("SizeTypeID", strCategoryPkey);
+        params.put("CategoryID", myClosetData.getStrCategoryPkey());
     }
 
     @Override
@@ -174,8 +172,6 @@ public class SignupInformation3Activity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CameraMeasureActivity.class);
-                intent.putExtra("CategoryPKey", CategoryPKey);
-                intent.putExtra("CategoryName", CategoryName);
                 startActivity(intent);
             }
         });
@@ -200,8 +196,8 @@ public class SignupInformation3Activity extends BaseActivity {
 
                     RequestParams params1 = new RequestParams();
                     params1.put("UserPKey", userPkey);
-                    params1.put("CategoryID", strCategoryPkey);
-                    params1.put("Name", name);
+                    params1.put("CategoryID", myClosetData.getStrCategoryPkey());
+                    params1.put("Name", myClosetData.getName());
                     params1.put("SizetypeAndSize", necessarySizeTypeAndSize);
 
                     HttpClient.post("/sizeax/CHS/php/insertusersize.php", params1, new AsyncHttpResponseHandler() {

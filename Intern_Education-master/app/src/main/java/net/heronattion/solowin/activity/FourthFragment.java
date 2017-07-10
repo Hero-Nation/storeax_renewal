@@ -112,7 +112,13 @@ public class FourthFragment extends Fragment {
                     manFlag=1;
                     womanFlag=0;
                 }
-//                Intent intent = new Intent()
+                Intent intent = new Intent(getActivity(),SignupInformation2Activity.class);
+
+                intent.putExtra("manFlag",manFlag);
+                intent.putExtra("womanFlag",womanFlag);
+                intent.putExtra("activityFlag","addSize");
+                startActivity(intent);
+                getActivity().finish();
                 Log.d("addClothes","addClothes");
             }
         });

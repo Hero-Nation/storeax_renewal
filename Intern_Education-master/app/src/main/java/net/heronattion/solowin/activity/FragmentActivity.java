@@ -3,6 +3,7 @@ package net.heronattion.solowin.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -282,7 +283,11 @@ public class FragmentActivity extends BaseActivity implements NavigationView.OnN
         contactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "서비스 준비 중입니다.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                Uri uri = Uri.parse("http://www.heronation.net/");
+                intent.setData(uri);
+                startActivity(intent);
+//                Toast.makeText(mContext, "서비스 준비 중입니다.", Toast.LENGTH_SHORT).show();
             }
         });
         termButton.setOnClickListener(new View.OnClickListener() {
@@ -294,6 +299,10 @@ public class FragmentActivity extends BaseActivity implements NavigationView.OnN
         inquiryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //activity는 넘겨 놓은 상태 추후 주석처리만 해제하면 바로 사용가능 ContactActivity에서 작업필요
+//                Intent intent = new Intent(mContext, ContactActivity.class);
+//                startActivity(intent);
+//                finish();
                 Toast.makeText(mContext, "서비스 준비 중입니다.", Toast.LENGTH_SHORT).show();
             }
         });

@@ -128,6 +128,7 @@ public class SignupInformationActivity extends BaseActivity {
                                 Intent intent = new Intent(mContext, SignupInformation2Activity.class);
                                 intent.putExtra("manFlag", manFlag);
                                 intent.putExtra("womanFlag", womanFlag);
+                                intent.putExtra("activityFlag","signUp");
                                 startActivity(intent);
                                 finish();
                                 break;
@@ -156,6 +157,7 @@ public class SignupInformationActivity extends BaseActivity {
                 Intent intent = new Intent(mContext, SignupInformation2Activity.class);
                 intent.putExtra("manFlag", manFlag);
                 intent.putExtra("womanFlag", womanFlag);
+                intent.putExtra("activityFlag","signUp");
                 startActivity(intent);
                 finish();
             }

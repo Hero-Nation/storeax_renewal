@@ -57,6 +57,14 @@ public class UpdatePassword extends BaseActivity {
     }
 
     @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        Intent intent = new Intent(mContext, FragmentActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
     public void setupEvents() {
         super.setupEvents();
 
