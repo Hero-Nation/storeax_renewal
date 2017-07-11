@@ -38,19 +38,21 @@ public class ThirdFragment extends Fragment {
 
     private Button changeStyleBtn;
     RecyclerView recyclerView;
-    List<BrandProductItem> listViewItems;
-//    ArrayList<BrandProductItem> listViewItems;
+    ArrayList<BrandProductItem> listViewItems;
     LinearLayout layout;
     LinearLayout detailLayout;
     private StaggeredGridLayoutManager gaggeredGridLayoutManager;
     private String mProductStyle;
     private String[] wishList;
     private String[][] parseDataList;
-    private int pastVisibleItems;
     private MyRecyclerViewAdapter rcAdapter;
     private int scrollFlag;
     private int userID;
     private boolean isWish;
+
+    private boolean loading = true;
+    private boolean lastProducdt = false;
+    private int pastVisibleItems, visibleItemCount, totalItemCount;
 
     public ThirdFragment()
     {
@@ -142,8 +144,12 @@ public class ThirdFragment extends Fragment {
                     }
                     log.d("style", mProductStyle);
                 }
-                setStaggeredGridLayout();
-//                rcAdapter.notifyDataSetChanged();
+                if(parseDataList.length==15) {
+                    loading = true;
+                }else{
+                    lastProducdt = true;
+                }
+                rcAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -154,28 +160,31 @@ public class ThirdFragment extends Fragment {
     }
 
     // StaggeredGridView
-    public void setStaggeredGridLayout() {
-            recyclerView.setAdapter(rcAdapter);
-    }
 
     public void setupEvents() {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int totalItemCount = gaggeredGridLayoutManager.getItemCount();
-                int[] lastVisibleItems = gaggeredGridLayoutManager.findLastCompletelyVisibleItemPositions(null);
-                if (lastVisibleItems != null && lastVisibleItems.length > 0) {
-                    pastVisibleItems = lastVisibleItems[0];
+                gaggeredGridLayoutManager.invalidateSpanAssignments();
+                visibleItemCount = gaggeredGridLayoutManager.getChildCount();
+                totalItemCount = gaggeredGridLayoutManager.getItemCount();
+                int[] firstVisibleItems = null;
+                firstVisibleItems = gaggeredGridLayoutManager.findFirstVisibleItemPositions(firstVisibleItems);
+                if(firstVisibleItems != null && firstVisibleItems.length > 0) {
+                    pastVisibleItems = firstVisibleItems[0];
                 }
-                Log.e("total",""+totalItemCount);
-                Log.e("past",""+pastVisibleItems);
-                Log.e("scroll",""+scrollFlag);
-
-                if (pastVisibleItems==totalItemCount-1) {
-                    Toast.makeText(mContext, "test", Toast.LENGTH_SHORT).show();
-                    scrollFlag ++;
-                    setProductItem();
+                if (loading) {
+                    if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
+                        loading = false;
+                        scrollFlag++;
+                        setProductItem();
+                    }
+                }
+                if(lastProducdt){
+                    lastProducdt = false;
+                    Log.e("toastTest", "aaa");
+                    Toast.makeText(mContext,"상품이 없습니다.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -201,5 +210,6 @@ public class ThirdFragment extends Fragment {
         recyclerView.setLayoutManager(gaggeredGridLayoutManager);
         rcAdapter = new MyRecyclerViewAdapter(getContext(), listViewItems);
         changeStyleBtn = (Button) layout.findViewById(R.id.changeStyleBtn);
+        recyclerView.setAdapter(rcAdapter);
     }
 }

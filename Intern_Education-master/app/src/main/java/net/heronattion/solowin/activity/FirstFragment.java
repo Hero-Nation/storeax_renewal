@@ -79,9 +79,8 @@ public class FirstFragment extends Fragment {
                 intent.putExtra("brandKey", item.getBrandKey());
                 intent.putExtra("name", item.getName());
                 intent.putExtra("logo", item.getLogo());
-//                intent.putExtra("favorite", item.getFavorite());
                 startActivity(intent);
-//                getActivity().finish();
+                getActivity().finish();
             }
         });
     }

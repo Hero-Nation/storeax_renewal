@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -34,6 +35,8 @@ import cz.msebera.android.httpclient.Header;
 
 import static com.loopj.android.http.AsyncHttpClient.log;
 import static java.lang.Integer.parseInt;
+import static net.heronattion.solowin.activity.FragmentActivity.mContext;
+
 
 /**
  * Created by heronation on 2017-06-08.
@@ -50,16 +53,15 @@ public class SecondFragment extends Fragment {
     private LinearLayout clothEmptyView;
 
     private boolean brandIsData = false;
-    private boolean clothIsdata = false;
+    private boolean clothIsdata = true;
     public static int changeSearchBtn = 0;
 
     private RecyclerView clothListView;
-    List<BrandProductItem> listViewItems;
+    ArrayList<BrandProductItem> listViewItems;
     private StaggeredGridLayoutManager gaggeredGridLayoutManager;
     private String mProductStyle;
     private String[] wishList;
     String[][] parseDataList;
-    private int pastVisibleItems;
     MyRecyclerViewAdapter rcAdapter;
     private int scrollFlag;
     private int userID;
@@ -68,6 +70,9 @@ public class SecondFragment extends Fragment {
     FavoriteBrandListAdapter adapter;
 
     private String[][] mBrandListItem;
+    private boolean loading = true;
+    private boolean lastProducdt = false;
+    private int pastVisibleItems, visibleItemCount, totalItemCount;
 
     public SecondFragment()
     {
@@ -119,7 +124,7 @@ public class SecondFragment extends Fragment {
     }
 
     public  void setIsDataEvent() {
-        log.d("brandIsData", brandIsData + "");
+        log.d("brandIsData", clothIsdata + "");
         if(brandIsData) {
             brandListView.setVisibility(View.VISIBLE);
             brandEmptyView.setVisibility(View.GONE);
@@ -149,7 +154,6 @@ public class SecondFragment extends Fragment {
                 intent.putExtra("name", item.getName());
                 intent.putExtra("logo", item.getLogo());
                 startActivity(intent);
-//                getActivity().finish();
             }
         });
     }
@@ -201,35 +205,39 @@ public class SecondFragment extends Fragment {
                 log.d("responseW=>>", response);
                 if(response.equals("0")) {
                     Log.e("responseW1=>>", response);
-                    clothIsdata = false;
                 }else {
                     Log.e("responseW2=>>", response);
 
-                ParseData parse = new ParseData();
-                parseDataList = parse.getDoubleArrayData(response);
+                    ParseData parse = new ParseData();
+                    parseDataList = parse.getDoubleArrayData(response);
 
-                for (int i=0; i< parseDataList.length; i++) {
-                    listViewItems.add(new BrandProductItem(parseDataList[i][1], parseDataList[i][2], parseDataList[i][4], parseDataList[i][5], parseInt(parseDataList[i][0]), true));
-                    clothIsdata = true;
-                }
-
-//                Log.i("listViewItems for문", listViewItems.size()+"");
-                ////////////////////////////////////
-
-                List<String[]> mParsedStyleDataList = new ArrayList<>();
-                mParsedStyleDataList  = parse.getMergeArrayList(parseDataList, 6);
-
-                for (int i = 0; i < parseDataList.length; i++) {
-
-                    mProductStyle = "";
-
-                    for (int j = 0; j < mParsedStyleDataList.get(i).length; j++) {
-
-                        mProductStyle += mParsedStyleDataList.get(i)[j] + ", ";
+                    for (int i=0; i< parseDataList.length; i++) {
+                        listViewItems.add(new BrandProductItem(parseDataList[i][1], parseDataList[i][2], parseDataList[i][4], parseDataList[i][5], parseInt(parseDataList[i][0]), true));
+                        clothIsdata = true;
                     }
-                    log.d("style", mProductStyle);
-                }
-                clothListView.setAdapter(rcAdapter);
+
+                    //                Log.i("listViewItems for문", listViewItems.size()+"");
+                    ////////////////////////////////////
+
+                    List<String[]> mParsedStyleDataList = new ArrayList<>();
+                    mParsedStyleDataList  = parse.getMergeArrayList(parseDataList, 6);
+
+                    for (int i = 0; i < parseDataList.length; i++) {
+
+                        mProductStyle = "";
+
+                        for (int j = 0; j < mParsedStyleDataList.get(i).length; j++) {
+
+                            mProductStyle += mParsedStyleDataList.get(i)[j] + ", ";
+                        }
+                        log.d("style", mProductStyle);
+                    }
+                    if(parseDataList.length==15) {
+                        loading = true;
+                    }else{
+                        lastProducdt = true;
+                    }
+                    rcAdapter.notifyDataSetChanged();
                 }
                 setIsDataEvent();
             }
@@ -239,29 +247,39 @@ public class SecondFragment extends Fragment {
             }
         });
     }
-    public void setClickedProductItem(){
-        clothListView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), clothListView, new RecyclerItemClickListener.OnItemClickListener(){
+    public void setScrollRecyclerView(){
+        clothListView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
-            public void onItemClick(View view, int position) {
-                Context context = getContext();
-                String url = parseDataList[position][5];
-                Log.e("POSITION", url);
-                Intent intent = new Intent(context, LoadDetailActivity.class);
-                intent.putExtra("URL", url);
-                startActivity(intent);
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                gaggeredGridLayoutManager.invalidateSpanAssignments();
+                visibleItemCount = gaggeredGridLayoutManager.getChildCount();
+                totalItemCount = gaggeredGridLayoutManager.getItemCount();
+                int[] firstVisibleItems = null;
+                firstVisibleItems = gaggeredGridLayoutManager.findFirstVisibleItemPositions(firstVisibleItems);
+                if(firstVisibleItems != null && firstVisibleItems.length > 0) {
+                    pastVisibleItems = firstVisibleItems[0];
+                }
+                if (loading) {
+                    if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
+                        loading = false;
+                        scrollFlag++;
+                        setProductItem();
+                    }
+                }
+                if(lastProducdt){
+                    lastProducdt = false;
+                    Toast.makeText(getActivity(),"상품이 없습니다.", Toast.LENGTH_SHORT).show();
+                }
             }
-            @Override
-            public void onLongItemClick(View view, int position) {
-            }
-        }));
+        });
     }
-
     public void setupEvents(){
         setTabEvent();
         setFavoriteBrandData();
         setProductItem();
         setClickedListItem();
-//        setClickedProductItem();
+        setScrollRecyclerView();
     }
 
     public void setValues(){
@@ -288,5 +306,6 @@ public class SecondFragment extends Fragment {
         clothListView.setHasFixedSize(true);
         clothListView.setLayoutManager(gaggeredGridLayoutManager);
         rcAdapter = new MyRecyclerViewAdapter(getContext(), listViewItems);
+        clothListView.setAdapter(rcAdapter);
     }
 }

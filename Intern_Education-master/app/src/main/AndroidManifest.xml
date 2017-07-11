@@ -44,6 +44,7 @@
             android:name=".activity.CameraMeasureActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.UpdatePassword" />
+        <activity android:name=".activity.TermsActivity" />
         <activity android:name=".activity.ContactActivity" />
         <activity android:name=".activity.MyPageActivity" />
         <activity android:name=".activity.FragmentActivity" />

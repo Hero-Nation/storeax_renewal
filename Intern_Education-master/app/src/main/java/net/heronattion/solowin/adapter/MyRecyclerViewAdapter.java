@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import net.heronattion.solowin.R;
 import net.heronattion.solowin.data.BrandProductItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,10 +21,10 @@ import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyViewHolders> {
 
-    private List<BrandProductItem> itemList;
+    private ArrayList<BrandProductItem> itemList;
     private Context context;
 
-    public MyRecyclerViewAdapter(Context context, List<BrandProductItem> itemList) {
+    public MyRecyclerViewAdapter(Context context, ArrayList<BrandProductItem> itemList) {
         this.itemList = itemList;
         this.context = context;
     }

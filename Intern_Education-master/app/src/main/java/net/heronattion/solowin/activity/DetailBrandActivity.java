@@ -45,32 +45,29 @@ public class DetailBrandActivity extends BaseActivity {
 
     RecyclerView recyclerView;
     BrandListAdapter adapter;
-    List<BrandProductItem> listViewItems;
+    ArrayList<BrandProductItem> listViewItems;
     private StaggeredGridLayoutManager gaggeredGridLayoutManager;
     private MyRecyclerViewAdapter rcAdapter;
     private String mProductStyle;
     private String[] wishList;
     private String[][] parseDataList;
     private String[][] brandCategory;
-    private String[] favoriteData;
-    private String[][] mFavoriteListItem;
     private int userID;
     private int categoryID;
-
+    private int scrollFlag;
     private ImageView backBtn;
     private ImageView favoritebrandBtn;
     private TextView brand_set_price;
     private ImageView detailLogo;
     private TextView detailName;
-    private ImageView detailFavorite;
 
-    /*
-        intent 값 주고 받기
-     */
-    private int mPos;
     private String mbrandKey, mTitle, mLogo;
     private boolean mFavorite;
     private boolean isWish;
+
+    private boolean loading = true;
+    private boolean lastProducdt = false;
+    private int pastVisibleItems, visibleItemCount, totalItemCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +87,7 @@ public class DetailBrandActivity extends BaseActivity {
         getWishList();
         setClickedDialog();
         setClickedbackBtn();
-//        setClickedItem();
+        setScrollRecyclerView();
     }
 
     @Override
@@ -103,10 +100,8 @@ public class DetailBrandActivity extends BaseActivity {
     }
 
     public void setValues() {
-        super.setValues();
-
         adapter = new BrandListAdapter(getApplicationContext());
-
+        scrollFlag = 0;
         Intent intent = getIntent();
         userID = FragmentActivity.userPkey;
         mbrandKey = intent.getStringExtra("brandKey");
@@ -149,7 +144,33 @@ public class DetailBrandActivity extends BaseActivity {
             }
         });
     }
-
+    public void setScrollRecyclerView(){
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                gaggeredGridLayoutManager.invalidateSpanAssignments();
+                visibleItemCount = gaggeredGridLayoutManager.getChildCount();
+                totalItemCount = gaggeredGridLayoutManager.getItemCount();
+                int[] firstVisibleItems = null;
+                firstVisibleItems = gaggeredGridLayoutManager.findFirstVisibleItemPositions(firstVisibleItems);
+                if(firstVisibleItems != null && firstVisibleItems.length > 0) {
+                    pastVisibleItems = firstVisibleItems[0];
+                }
+                if (loading) {
+                    if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
+                        loading = false;
+                        scrollFlag++;
+                        setProductItem();
+                    }
+                }
+                if(lastProducdt){
+                    lastProducdt = false;
+                    Toast.makeText(mContext,"상품이 없습니다.",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
     // Set price Dialog
     public void setDialog() {
         ViewDialog alert = new ViewDialog();
@@ -224,6 +245,7 @@ public class DetailBrandActivity extends BaseActivity {
     private void setProductItem() {
         RequestParams params = new RequestParams();
         // params.put 브랜드키
+        params.put("ScrollFlag", scrollFlag);
         params.put("Brand", mbrandKey);
         HttpClient.post("mall/php/tryFilter.php", params, new AsyncHttpResponseHandler() {
             @Override
@@ -257,7 +279,12 @@ public class DetailBrandActivity extends BaseActivity {
                     }
 
                 }
-                setStaggeredGridLayout();
+                if(parseDataList.length==15) {
+                    loading = true;
+                }else{
+                    lastProducdt = true;
+                }
+                rcAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -268,9 +295,6 @@ public class DetailBrandActivity extends BaseActivity {
     }
 
     // StaggeredGridView
-    public void setStaggeredGridLayout() {
-        recyclerView.setAdapter(rcAdapter);
-    }
 
     // 즐겨찾기
     public void setFavoriteBtn() {
@@ -393,5 +417,6 @@ public class DetailBrandActivity extends BaseActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(gaggeredGridLayoutManager);
         rcAdapter = new MyRecyclerViewAdapter(DetailBrandActivity.this, listViewItems);
+        recyclerView.setAdapter(rcAdapter);
     }
 }

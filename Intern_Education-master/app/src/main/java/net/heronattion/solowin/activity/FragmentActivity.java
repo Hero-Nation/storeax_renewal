@@ -23,16 +23,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 
 import net.heronattion.solowin.R;
 import net.heronattion.solowin.network.HttpClient;
-
-import org.w3c.dom.Text;
-
 import cz.msebera.android.httpclient.Header;
 
 import static java.lang.Integer.parseInt;
@@ -63,7 +59,6 @@ public class FragmentActivity extends BaseActivity implements NavigationView.OnN
     private DrawerLayout dlDrawer;
     private ImageView searchBtn;
 
-    private boolean DrawerState;
     private int changeSearchBtn = 0;
     private int getChangeSearchBtn;
 
@@ -293,6 +288,8 @@ public class FragmentActivity extends BaseActivity implements NavigationView.OnN
         termButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Intent intent = new Intent(mContext, TermsActivity.class);
+//                startActivity(intent);
                 Toast.makeText(mContext, "서비스 준비 중입니다.", Toast.LENGTH_SHORT).show();
             }
         });
