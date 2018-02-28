@@ -48,8 +48,8 @@ public class Show2Activity extends BaseActivity {
     private TextView rectSizeTxt2;
     private TextView cardLengthTxt2;
 
-    Bitmap resultBitmap;
-    //이미지 프로세싱 결과물과 포토뷰에 점 찍기에 대한 멤버 변수
+    Bitmap resultBitmap; // 촬영한 이미지 저장 클래스
+    //이미지 프로세싱 결과물과 포토뷰에 점 찍기에 대한 변수
     public static float[][] ipPercent; // SortLineAndPaint결과로 나온 교점들 저장하는 float이중 배열
     RectF mRectF; // 포토뷰에 들어갈 이미지의 RectF정보 저장
     ImageView imageView; // 가이드라인 위한 이미지뷰
@@ -58,7 +58,7 @@ public class Show2Activity extends BaseActivity {
     float scaleValue; // 점의 확대를 위한 상수
     Bitmap cardDotbit; // 카드에 대해 찍힌 점 이미지
     Bitmap outDotbit; // 비교대상 점 이미지
-    boolean windowfoucsflag = false;
+    boolean windowfoucsflag = false; // onWindowFocusChanged 메소드에 사용될 변수
 //    private Button logoBtn;
 
     @Override
@@ -78,7 +78,7 @@ public class Show2Activity extends BaseActivity {
     // onWindowFocusChanged -> 현재 Activity의 focus여부를 확인
     // 즉 onCreate 다음 실행되는 것과 같은 상태
     // 주의 : Activity의 focus를 확인하기 때문에 액티비티가 이동되거나 화면이 꺼졌다 켜질때 마다 실행
-    // 점을 지우는 반복문을 집어넣어서 여러개가 안찍히도록 한다.
+    // flag변수를 사용하여 한번만 실행되도록 한다.
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -86,6 +86,7 @@ public class Show2Activity extends BaseActivity {
 
         if (windowfoucsflag) {
             createDotView();
+            // windowfocusflag를 false로 만들어, 최초 1회에만 생성되도록 한다.
             windowfoucsflag = false;
         }
 
@@ -120,7 +121,6 @@ public class Show2Activity extends BaseActivity {
 
         cardDotbit = BitmapFactory.decodeResource(getResources(), R.drawable.dotimage3);
         outDotbit = BitmapFactory.decodeResource(getResources(), R.drawable.dotimage4);
-//        photoImg2.setScale(r,resultBitmap.getWidth()/2,resultBitmap.getHeight()/2,true);
 
         // 가이드 라인 그려주는 이미지뷰
         imageView = new ImageView(mContext);
@@ -310,51 +310,32 @@ public class Show2Activity extends BaseActivity {
 
                 float compareLine =
                 Math.round(((float) Math.sqrt(vec.dot(vec)) / photoImg2.getScale()) * 100f) / 100f;
-//
-//                SortLineAndPaint sortLineAndPaint = new SortLineAndPaint();
-//                sortLineAndPaint.calAngle(points);
-////                    Log.i("leng x/y", SortLineAndPaint.length_x + " / " + SortLineAndPaint.length_y);
-//                Log.i("totalSquareFlag", sortLineAndPaint.totalSquareFlag + "");
-//                if (sortLineAndPaint.totalSquareFlag == 0) {
-//                    float cardLineHori = Math.round((sortLineAndPaint.length_x / photoImg2.getScale()) * 100f) / 100f; // 가로선
-//                    float cardLineVer = Math.round((sortLineAndPaint.length_y / photoImg2.getScale()) * 100f) / 100f;  // 세로선
-////                cardLengthTxt2.setText("긴면 : " + Math.round((sortLineAndPaint.length_x / photoImg2.getScale()) * 100f) / 100f
-////                        + " / 짧은 면 : " + Math.round((sortLineAndPaint.length_y / photoImg2.getScale()) * 100f) / 100f);
-//                    float compareLine = 0;
-//                    if (cardLineHori >= cardLineVer) { // 긴면을 기준으로 삼는다.
-//                        compareLine = cardLineHori;
-//                    } else {
-//                        compareLine = cardLineVer;
-//                    }
-//
-//
-//
-//
-//                }
+
                 // 비례식을 이용한 길이 비교
-                float realLine = ((outLine) / photoImg2.getScale()
-                        * 8.56f) / compareLine;
+                float realLine = ((outLine) / photoImg2.getScale() * 8.56f) / compareLine;
 
                 DecimalFormat form = new DecimalFormat("#.##");
 
                 if (CameraInit.flag.equals("2")) {
 
                     CameraInit.sCameraWaistSize = Float.parseFloat(form.format(realLine));
-                    finish();
+                    Toast.makeText(mContext, "측정 결과"+ form.format(realLine), Toast.LENGTH_SHORT).show();
+//                    finish();
 
                 } else {
 
                     CameraInit.sCameraShoulderSize = Float.parseFloat(form.format(realLine));
-                    finish();
+                    Toast.makeText(mContext, "측정 결과"+ form.format(realLine), Toast.LENGTH_SHORT).show();
+//                    finish();
                 }
 
                 cardLengthTxt2.setText(Math.round(realLine * 100f) / 100f + "cm입니다.");
                 // 카드 로고로 가리고 저장
-                CreateLogo createLogo = new CreateLogo();
-                createLogo.mContext = mContext;
-                createLogo.setBaseBitmap(resultBitmap);
-                createLogo.setCardDotList(cardDotList);
-                createLogo.logoProcess();
+//                CreateLogo createLogo = new CreateLogo();
+//                createLogo.mContext = mContext;
+//                createLogo.setBaseBitmap(resultBitmap);
+//                createLogo.setCardDotList(cardDotList);
+//                createLogo.logoProcess();
 
 
 

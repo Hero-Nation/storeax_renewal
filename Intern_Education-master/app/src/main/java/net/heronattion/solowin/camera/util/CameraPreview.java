@@ -56,6 +56,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     public void surfaceCreated(SurfaceHolder holder) {
 
+        Log.d("surface","Created");
         // Surface가 생성되었으니 프리뷰를 어디에 띄울지 지정해준다. (holder 로 받은 SurfaceHolder에 뿌려준다.
 
         try {
@@ -86,9 +87,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
             mCamera.setPreviewDisplay(holder);
 
-            mCamera.startPreview();
+//            mCamera.startPreview();
 
         } catch (IOException e) {
+
 
             Log.d(TAG, "Error setting camera preview: " + e.getMessage());
 
@@ -101,7 +103,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     @Override
 
     public void surfaceDestroyed(SurfaceHolder holder) {
-
+        Log.d("surface","Destory");
         // 프리뷰 제거시 카메라 사용도 끝났다고 간주하여 리소스를 전부 반환한다
 
         if (mCamera != null) {
@@ -166,7 +168,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     @Override
 
     public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-
+        Log.d("surface","Changed");
         // 프리뷰를 회전시키거나 변경시 처리를 여기서 해준다.
 
         // 프리뷰 변경시에는 먼저 프리뷰를 멈춘다음 변경해야한다.

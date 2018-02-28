@@ -203,8 +203,13 @@ public class CameraActivity extends BaseActivity {
 //                            x &= sensorFlag[i];
 //                        }
 //                        System.out.println(x);
-//                        if(x) // x가 true일때만 촬영
+//                        if(x) // x가 true일때만 촬영loading = new ProgressDialog(mContext);
+                        loading = new ProgressDialog(mContext);
+                        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        loading.setMessage("Loading...");
+                        loading.show();
                         mCamera.takePicture(shutterCallback, null, mPicture);
+
 
                     }
                 });
@@ -260,7 +265,7 @@ public class CameraActivity extends BaseActivity {
     // 찰칵 소리 -> shutterCallback
     private Camera.ShutterCallback shutterCallback = new Camera.ShutterCallback() {
         public void onShutter() {
-//            Toast.makeText(mContext.getApplicationContext(),"Loading....", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext.getApplicationContext(),"Loading....", Toast.LENGTH_LONG).show();
             loading = new ProgressDialog(mContext);
             loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             loading.setMessage("Loading...");
@@ -303,9 +308,7 @@ public class CameraActivity extends BaseActivity {
             bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
 
             // 이미지 프로세싱 시작
-            ConvertGray convertGray = new ConvertGray();
-            convertGray.mOrgImage = bitmap;
-            convertGray.cropAndResize();
+            ConvertGray convertGray = new ConvertGray(bitmap);
 
             // 프로세싱된 결과를 바이트 어레이로 다시 변환 -> 변경됨
             // Show2Activity에서 원본 이미지를 보여주고 그 위에 float이중배열로 받은 좌표로 점을 찍기때문에

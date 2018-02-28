@@ -30,11 +30,7 @@
         <activity
             android:name=".activity.SignupInformation2Activity"
             android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.SignupInformation3Activity"
@@ -46,7 +42,15 @@
         <activity android:name=".activity.ContactActivity" />
         <activity android:name=".activity.MyPageActivity" />
         <activity android:name=".camera.CameraActivity" />
-        <activity android:name=".activity.CameraCautionActivity" />
+        <activity android:name=".activity.CameraCautionActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name=".camera.Show2Activity"/>
         <activity android:name=".activity.CameraInfoActivity" />
         <activity
             android:name=".activity.CameraTempActivity"

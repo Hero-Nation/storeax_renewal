@@ -25,6 +25,12 @@ public class ConvertGray {
     public static SizeData sizeData; // SobelGradAndDetectLine에서  사용
     public static Bitmap resizeImage; // SortLineAndPaint에서 사용
 
+
+    public ConvertGray(Bitmap bitmap){
+        mOrgImage = bitmap;
+        cropAndResize();
+    }
+
     // 이미지를 crop 및 사이즈 조절
     public void cropAndResize() {
 
